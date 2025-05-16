@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=application name
+Exec=/path/to/application
+Icon=/path/to/application/icon.png
+Terminal=false
+Categories=Development;
