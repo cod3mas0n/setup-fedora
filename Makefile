@@ -4,7 +4,7 @@ SHELL := /bin/bash
 .DEFAULT_GOAL := install-packages
 
 .PHONY: all
-all: dnf5-conf dnf5-conf-proxy rpmfusion fonts install-packages remove-gnome-extras ansible virtualization proxychains-ng vscode terraform k8s-lens free-lens kubectx helm minio-mc sing-box crontab postman end-message
+all: dnf5-conf rpmfusion fonts install-packages remove-gnome-extras ansible virtualization proxychains-ng vscode terraform k8s-lens free-lens kubectx helm minio-mc sing-box crontab postman nekoray hiddify end-message
 
 .PHONY: dnf-configs
 dnf-configs: dnf5-conf dnf5-conf-proxy rpmfusion
@@ -17,20 +17,13 @@ k8s-tools: k8s-lens free-lens kubectx helm
 fonts:
 	sudo dnf install -y fira-code-fonts
 
-CUSTOM_DNF_CONFIGURATION_FILE := /etc/dnf/libdnf5.conf.d/20-user-settings.conf
+CUSTOM_DNF_CONFIGURATION_FILE := etc/dnf/libdnf5.conf.d/20-user-settings.conf
 .PHONY: dnf5-conf
 dnf5-conf:
-	@sudo echo "fastestmirror=true" > ${CUSTOM_DNF_CONFIGURATION_FILE}
-	@sudo echo "max_parallel_downloads=3" >> ${CUSTOM_DNF_CONFIGURATION_FILE}
-	@sudo echo "deltarpm=1" >> ${CUSTOM_DNF_CONFIGURATION_FILE}
-	@sudo echo "# ip_resolve=4" >> ${CUSTOM_DNF_CONFIGURATION_FILE}
+	sudo ln -fs ${PWD}/${CUSTOM_DNF_CONFIGURATION_FILE} /${CUSTOM_DNF_CONFIGURATION_FILE}
 
 	@sudo dnf update -y
 	@sudo dnf install -y dnf-plugins-core
-
-.PHONY: dnf5-conf-proxy
-dnf5-conf-proxy:
-	@sudo echo "proxy=socks5h://127.0.0.1:10808" >> ${CUSTOM_DNF_CONFIGURATION_FILE}
 
 .PHONY: rpmfusion
 rpmfusion:
@@ -196,8 +189,18 @@ nekoray:
 	sudo unzip -o "$$zipfile" && \
 	popd &> /dev/null && \
 	echo "Nekoray installed in /opt/nekoray"
-	
+
 	sudo ln -fs ${PWD}/${NEKORAY_DESKTOP_ENTRY} /${NEKORAY_DESKTOP_ENTRY}
+
+.PHONY: hiddify
+hiddify:
+	@echo "Fetching latest Hiddify release URL..."
+	@curl -fsSL https://api.github.com/repos/hiddify/hiddify-next/releases/latest \
+	| grep "browser_download_url" \
+	| grep -E "Hiddify-rpm-x64.rpm" \
+	| cut -d '"' -f 4 \
+	| xargs curl -L -o /opt/Hiddify-rpm-x64.rpm
+	@sudo rpm -Uvh /opt/Hiddify-rpm-x64.rpm
 
 .PHONY: end-message
 end-message:
