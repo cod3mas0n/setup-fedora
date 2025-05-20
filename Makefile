@@ -26,9 +26,12 @@ dnf5-conf:
 	@sudo dnf install -y dnf-plugins-core
 
 .PHONY: rpmfusion
+# the shell in $(shell rpm -E %fedora) is specific for makefile , to make it to use the shell
+# main format is $(rpm -E %fedora)
+# https://rpmfusion.org/Configuration
 rpmfusion:
-	@sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
-	@sudo dnf install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+	@sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(shell rpm -E %fedora).noarch.rpm
+	@sudo dnf install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(shell rpm -E %fedora).noarch.rpm
 
 .PHONY: install-packages
 install-packages:
@@ -53,11 +56,11 @@ MITOGEN_DOWNLOAD_URL := https://files.pythonhosted.org/packages/source/m/mitogen
 ansible:
 	@sudo dnf install -y ansible ansible-lint ansible-galaxy
 	@sudo ansible-config init --disabled -t all > /${ANSIBLE_CFG_PATH}
-	@mv /${ANSIBLE_CFG_PATH} /${ANSIBLE_CFG_PATH}.bak &> /dev/null | true
-	ln -fs ${PWD}/${ANSIBLE_CFG_PATH} /${ANSIBLE_CFG_PATH}
+	@sudo mv /${ANSIBLE_CFG_PATH} /${ANSIBLE_CFG_PATH}.bak &> /dev/null | true
+	sudo ln -fs ${PWD}/${ANSIBLE_CFG_PATH} /${ANSIBLE_CFG_PATH}
 
-	@mkdir -p ${ANSIBLE_PLUINGS_DIR}
-	@rm -rf ${ANSIBLE_PLUINGS_DIR}/mitogen-${MITOGEN_VERSION} &> /dev/null | true
+	@sudo mkdir -p ${ANSIBLE_PLUINGS_DIR}
+	@sudo rm -rf ${ANSIBLE_PLUINGS_DIR}/mitogen-${MITOGEN_VERSION} &> /dev/null | true
 	sudo curl -fsSL ${MITOGEN_DOWNLOAD_URL} -o ${ANSIBLE_PLUINGS_DIR}/mitogen-${MITOGEN_VERSION}.tar.gz
 	@pushd ${ANSIBLE_PLUINGS_DIR} &> /dev/null && \
 		sudo tar xzf mitogen-${MITOGEN_VERSION}.tar.gz && \
