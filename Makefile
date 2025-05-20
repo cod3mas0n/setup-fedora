@@ -60,18 +60,17 @@ ansible:
 	sudo ln -fs ${PWD}/${ANSIBLE_CFG_PATH} /${ANSIBLE_CFG_PATH}
 
 	@sudo mkdir -p ${ANSIBLE_PLUINGS_DIR}
-	@sudo rm -rf ${ANSIBLE_PLUINGS_DIR}/mitogen-${MITOGEN_VERSION} &> /dev/null | true
 	sudo curl -fsSL ${MITOGEN_DOWNLOAD_URL} -o ${ANSIBLE_PLUINGS_DIR}/mitogen-${MITOGEN_VERSION}.tar.gz
 	@pushd ${ANSIBLE_PLUINGS_DIR} &> /dev/null && \
 		sudo tar xzf mitogen-${MITOGEN_VERSION}.tar.gz && \
 		popd &> /dev/null
-	@sudo sed -i "s|^strategy_plugins=.*/mitogen-[0-9.]\+/ansible_mitogen/plugins/strategy$|strategy_plugins=/etc/plugins/mitogen-${MITOGEN_VERSION}/ansible_mitogen/plugins/strategy|" /${ANSIBLE_CFG_PATH}
+	@sudo sed -i "s|^strategy_plugins=.*/mitogen-[0-9.]\+/ansible_mitogen/plugins/strategy|strategy_plugins=/etc/plugins/mitogen-${MITOGEN_VERSION}/ansible_mitogen/plugins/strategy|" /${ANSIBLE_CFG_PATH}
 
 # https://docs.fedoraproject.org/en-US/quick-docs/virtualization-getting-started/
 .PHONY: virtualization
 virtualization:
-	@sudo dnf install @virtualization
-	@sudo dnf group install --with-optional virtualization
+	@sudo dnf install -y @virtualization
+	@sudo dnf group install -y --with-optional virtualization
 	@sudo systemctl start libvirtd
 	@sudo systemctl enable libvirtd
 	@sudo usermod -aG qemu ${USER}
@@ -79,7 +78,7 @@ virtualization:
 
 .PHONY: remove-gnome-extras
 remove-gnome-extras:
-	@sudo dnf remove gnome-boxes gnome-maps \
+	@sudo dnf remove -y gnome-boxes gnome-maps \
 		gnome-contacts rhythmbox gnome-weather
 
 PROXYCHAINS_DIR := /opt/proxychains-ng
