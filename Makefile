@@ -84,6 +84,7 @@ remove-gnome-extras:
 PROXYCHAINS_DIR := /opt/proxychains-ng
 .PHONY: proxychains-ng
 proxychains-ng:
+	@ sudo rm -rf ${PROXYCHAINS_DIR}
 	@sudo git clone https://github.com/rofl0r/proxychains-ng.git ${PROXYCHAINS_DIR}
 	@pushd ${PROXYCHAINS_DIR} &> /dev/null && \
 		sudo ./configure --prefix=/usr --sysconfdir=/etc && \
