@@ -91,7 +91,7 @@ proxychains-ng:
 		sudo $(MAKE) install && \
 		sudo $(MAKE) install-config && \
 		popd &> /dev/null
-		sudo ln -fs ${PWD}/etc/proxychains.conf /etc/proxychains.conf
+	sudo ln -fs ${PWD}/etc/proxychains.conf /etc/proxychains.conf
 
 # https://code.visualstudio.com/docs/setup/linux#_rhel-fedora-and-centos-based-distributions
 
