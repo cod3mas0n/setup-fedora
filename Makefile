@@ -88,7 +88,7 @@ proxychains-ng:
 	@sudo git clone https://github.com/rofl0r/proxychains-ng.git ${PROXYCHAINS_DIR}
 	@pushd ${PROXYCHAINS_DIR} &> /dev/null && \
 		sudo ./configure --prefix=/usr --sysconfdir=/etc && \
-		$(MAKE) && \
+		sudo $(MAKE) && \
 		sudo $(MAKE) install && \
 		sudo $(MAKE) install-config && \
 		popd &> /dev/null
