@@ -203,6 +203,7 @@ nekoray:
 	\
 	zipfile="$$(basename $$(cat /tmp/nekoray_url.txt))" && \
 	sudo unzip -o "$$zipfile" && \
+	sudo rm -rf /usr/lib64/nekoray &> /dev/null | true
 	sudo mv /opt/nekoray/nekoray /usr/lib64/ && \
 	popd &> /dev/null && \
 	echo "Nekoray installed in /opt/nekoray"
