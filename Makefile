@@ -47,8 +47,8 @@ install-packages:
 		htop btop thunderbird remmina ipython3 \
 		google-chrome-stable brave-browser chromium \
 		unrar keepassxc libreoffice tldr most \
-		cowsay sshpass curl wget tar bat fzf cronie libssh2
-
+		cowsay sshpass curl wget tar bat fzf \
+		cronie libssh2 libayatana-appindicator3 libayatana-indicator-gtk3
 # https://mitogen.networkgenomics.com/ansible_detailed.html#installation
 ANSIBLE_CFG_PATH := etc/ansible/ansible.cfg
 ANSIBLE_PLUINGS_DIR := /etc/ansible/plugins
@@ -203,10 +203,10 @@ nekoray:
 	\
 	zipfile="$$(basename $$(cat /tmp/nekoray_url.txt))" && \
 	sudo unzip -o "$$zipfile" && \
-	sudo rm -rf /usr/lib64/nekoray &> /dev/null | true
+	sudo rm -rf /usr/lib64/nekoray &> /dev/null | true && \
 	sudo mv /opt/nekoray/nekoray /usr/lib64/ && \
 	popd &> /dev/null && \
-	echo "Nekoray installed in /opt/nekoray"
+	echo "Nekoray installed in /usr/lib64/nekoray "
 
 	sudo ln -fs ${PWD}/${NEKORAY_DESKTOP_ENTRY} /${NEKORAY_DESKTOP_ENTRY}
 
