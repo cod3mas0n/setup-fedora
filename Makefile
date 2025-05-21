@@ -1,5 +1,8 @@
 # Makefile
 
+# Use config.mak to override any of the following variables.
+# Do not make changes here.
+
 SHELL := /bin/bash
 .DEFAULT_GOAL := install-packages
 
@@ -84,7 +87,7 @@ remove-gnome-extras:
 PROXYCHAINS_DIR := /opt/proxychains-ng
 .PHONY: proxychains-ng
 proxychains-ng:
-	@ sudo rm -rf ${PROXYCHAINS_DIR}
+	@ sudo rm -rf ${PROXYCHAINS_DIR} &> /dev/null | true
 	@sudo git clone https://github.com/rofl0r/proxychains-ng.git ${PROXYCHAINS_DIR}
 	@pushd ${PROXYCHAINS_DIR} &> /dev/null && \
 		sudo ./configure --prefix=/usr --sysconfdir=/etc && \
@@ -101,8 +104,8 @@ VSCODE_REPO_PATH := etc/yum.repos.d/vscode.repo
 vscode:
 	@sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
 	sudo ln -fs ${PWD}/${VSCODE_REPO_PATH} /${VSCODE_REPO_PATH}
-	@sudo dnf check-update
-	@sudo dnf install code
+	@sudo dnf -y check-update
+	@sudo dnf install -y code
 
 .PHONY: terraform
 terraform:
@@ -113,13 +116,21 @@ terraform:
 .PHONY: k8s-lens
 k8s-lens:
 	@sudo dnf config-manager addrepo --overwrite --from-repofile=https://downloads.k8slens.dev/rpm/lens.repo
-	@sudo dnf install lens
+	@sudo dnf install -y lens
 
-# FREE_LENS_LATEST := https://api.github.com/repos/freelensapp/freelens/releases/latest
-# curl -fsSL ${FREE_LENS_LATEST} | grep "browser_download_url" | grep -E 'linux-amd64\.rpm"' | grep -v '\.sha256' | cut -d '"' -f 4 | xargs curl -LO
+FREE_LENS_LATEST := https://api.github.com/repos/freelensapp/freelens/releases/latest
 .PHONY: free-lens
 free-lens:
-	@sudo dnf install -y freelens
+	@echo "Fetching latest FreeLens..."
+	curl -fsSL ${FREE_LENS_LATEST} \
+	| grep "browser_download_url" \
+	| grep -E 'linux-amd64\.rpm"' \
+	| grep -v '\.sha256' \
+	| cut -d '"' -f 4 \
+	| head -n 1 \
+	| xargs sudo curl -L -o /opt/freelens-linux-amd64.rpm
+	@if ! rpm -q freelens &> /dev/null ; then sudo dnf install -y /opt/freelens;fi
+
 
 KUBERNETES_REPO_PATH := etc/yum.repos.d/kubernetes.repo
 .PHONY: kubectl
@@ -142,20 +153,22 @@ helm:
 
 .PHONY: minio-mc
 minio-mc:
-	@curl https://dl.min.io/client/mc/release/linux-amd64/mc --create-dirs -o ${HOME}/.minio-binaries/mc
-	@chmod +x $HOME/.minio-binaries/mc
+	@rm -rf ${HOME}/.minio-binaries/mc &> /dev/null | true
+	curl https://dl.min.io/client/mc/release/linux-amd64/mc --create-dirs -o ${HOME}/.minio-binaries/mc
+	@chmod +x ${HOME}/.minio-binaries/mc
 
 GOLANG_VERSION := go1.24.3.linux-amd64.tar.gz
 
 .PHONY: golang
 golang:
-	curl -fsSL https://go.dev/dl/${GOLANG_VERSION} -o /opt/${GOLANG_VERSION}
-	@rm -rf /usr/local/go && tar -C /usr/local -xzf /opt/${GOLANG_VERSION}
+	@sudo rm -rf /opt/${GOLANG_VERSION}
+	sudo curl -fsSL https://go.dev/dl/${GOLANG_VERSION} -o /opt/${GOLANG_VERSION}
+	sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf /opt/${GOLANG_VERSION}
 
 .PHONY: sing-box
 sing-box:
 	@sudo dnf config-manager addrepo --overwrite --from-repofile=https://sing-box.app/sing-box.repo
-	@sudo dnf install sing-box
+	@sudo dnf install -y sing-box
 
 ETC_CRONTAB_PATH := etc/crontab
 .PHONY: crontab
@@ -167,7 +180,7 @@ crontab:
 POSTMAN_DESKTOP_ENTRY := usr/share/applications/postman.desktop
 .PHONY: postman
 postman:
-	@curl -fsSL https://dl.pstmn.io/download/latest/linux_64 -o /opt/postman-linux-x64.tar.gz
+	sudo curl -fsSL https://dl.pstmn.io/download/latest/linux_64 -o /opt/postman-linux-x64.tar.gz
 	@sudo tar -C /opt -xzf /opt/postman-linux-x64.tar.gz
 	sudo ln -sf ${PWD}/${POSTMAN_DESKTOP_ENTRY} /${POSTMAN_DESKTOP_ENTRY}
 
@@ -178,7 +191,7 @@ NEKORAY_DESKTOP_ENTRY := usr/share/applications/nekoray.desktop
 nekoray:
 	@sudo mkdir -p /opt/nekoray
 	@echo "Fetching latest Nekoray release URL..."
-	@curl -fsSL https://api.github.com/repos/MatsuriDayo/nekoray/releases/latest \
+	curl -fsSL ${NEKORAY_LATEST} \
 	| grep "browser_download_url" \
 	| grep -E "linux64.zip" \
 	| cut -d '"' -f 4 \
@@ -190,19 +203,22 @@ nekoray:
 	\
 	zipfile="$$(basename $$(cat /tmp/nekoray_url.txt))" && \
 	sudo unzip -o "$$zipfile" && \
+	sudo mv /opt/nekoray/nekoray /usr/lib64/ && \
 	popd &> /dev/null && \
 	echo "Nekoray installed in /opt/nekoray"
 
 	sudo ln -fs ${PWD}/${NEKORAY_DESKTOP_ENTRY} /${NEKORAY_DESKTOP_ENTRY}
 
+HIDDIFY_LATEST := https://api.github.com/repos/hiddify/hiddify-next/releases/latest
+
 .PHONY: hiddify
 hiddify:
 	@echo "Fetching latest Hiddify release URL..."
-	@curl -fsSL https://api.github.com/repos/hiddify/hiddify-next/releases/latest \
+	curl -fsSL ${HIDDIFY_LATEST} \
 	| grep "browser_download_url" \
 	| grep -E "Hiddify-rpm-x64.rpm" \
 	| cut -d '"' -f 4 \
-	| xargs curl -L -o /opt/Hiddify-rpm-x64.rpm
+	| xargs sudo curl -L -o /opt/Hiddify-rpm-x64.rpm
 	@sudo rpm -Uvh /opt/Hiddify-rpm-x64.rpm
 
 .PHONY: end-message
