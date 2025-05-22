@@ -47,7 +47,7 @@ install-packages:
 		htop btop thunderbird remmina ipython3 \
 		google-chrome-stable brave-browser chromium \
 		unrar keepassxc libreoffice tldr most \
-		cowsay sshpass curl wget tar bat fzf \
+		cowsay sshpass gnupg2 curl wget tar bat fzf \
 		cronie libssh2 libayatana-appindicator3 libayatana-indicator-gtk3
 # https://mitogen.networkgenomics.com/ansible_detailed.html#installation
 ANSIBLE_CFG_PATH := etc/ansible/ansible.cfg
