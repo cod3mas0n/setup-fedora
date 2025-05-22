@@ -7,7 +7,7 @@ SHELL := /bin/bash
 .DEFAULT_GOAL := install-packages
 
 .PHONY: all
-all: dnf5-conf rpmfusion fonts install-packages remove-gnome-extras ansible virtualization proxychains-ng vscode terraform k8s-lens free-lens kubectx helm minio-mc sing-box crontab postman nekoray hiddify end-message
+all: dnf5-conf rpmfusion fonts install-packages remove-gnome-extras ansible virtualization proxychains-ng vscode terraform k8s-lens free-lens kubectx helm mimirtool minio-mc sing-box crontab postman nekoray hiddify end-message
 
 .PHONY: dnf-configs
 dnf-configs: dnf5-conf dnf5-conf-proxy rpmfusion
@@ -150,6 +150,13 @@ helm:
 	@sudo dnf install -y helm
 	@helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 	@helm repo update
+
+.PHONY: mimirtool
+mimirtool:
+	sudo curl -fsSLo /opt/mimirtool https://github.com/grafana/mimir/releases/latest/download/mimirtool-linux-amd64
+	@sudo mv /opt/mimirtool /usr/local/bin/mimirtool
+	@sudo chmod +x /usr/local/bin/mimirtool
+
 
 .PHONY: minio-mc
 minio-mc:
