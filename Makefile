@@ -232,9 +232,11 @@ hiddify:
 .PHONY: extras
 extras:
 	@echo "Linking Extras, like ytd, custom scripts."
-	@mkdir ${HOME}/Downloads/Youtube
-	ln -sf ${PWD}/extras/ytd-nopl.sh ${HOME}/Downloads/Youtube/ytd-nopl.sh
-	ln -sf ${PWD}/extras/ytd-pl.sh ${HOME}/Downloads/Youtube/ytd-pl.sh
+	@if ! [ -d ~/Downloads/Youtube ];then mkdir ${HOME}/Downloads/Youtube ;fi
+	ln -f ${PWD}/extras/ytd-nopl.sh ${HOME}/Downloads/Youtube/ytd-nopl.sh
+	@chmod +x ${HOME}/Downloads/Youtube/ytd-nopl.sh
+	ln -f ${PWD}/extras/ytd-pl.sh ${HOME}/Downloads/Youtube/ytd-pl.sh
+	@chmod +x ${HOME}/Downloads/Youtube/ytd-pl.sh
 
 
 .PHONY: end-message
