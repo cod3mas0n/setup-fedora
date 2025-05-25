@@ -7,7 +7,7 @@ SHELL := /bin/bash
 .DEFAULT_GOAL := install-packages
 
 .PHONY: all
-all: dnf5-conf rpmfusion fonts install-packages remove-gnome-extras ansible virtualization proxychains-ng vscode terraform k8s-lens free-lens kubectx helm mimirtool minio-mc sing-box crontab postman nekoray hiddify end-message
+all: dnf5-conf rpmfusion fonts install-packages remove-gnome-extras ansible virtualization proxychains-ng vscode terraform k8s-lens free-lens kubectx helm mimirtool minio-mc sing-box crontab postman nekoray hiddify extras end-message
 
 .PHONY: dnf-configs
 dnf-configs: dnf5-conf dnf5-conf-proxy rpmfusion
@@ -228,6 +228,14 @@ hiddify:
 	| cut -d '"' -f 4 \
 	| xargs sudo curl -L -o /opt/Hiddify-rpm-x64.rpm
 	@sudo rpm -Uvh /opt/Hiddify-rpm-x64.rpm
+
+.PHONY: extras
+extras:
+	@echo "Linking Extras, like ytd, custom scripts."
+	@mkdir ${HOME}/Downloads/Youtube
+	ln -sf ${PWD}/extras/ytd-nopl.sh ${HOME}/Downloads/Youtube/ytd-nopl.sh
+	ln -sf ${PWD}/extras/ytd-pl.sh ${HOME}/Downloads/Youtube/ytd-pl.sh
+
 
 .PHONY: end-message
 end-message:
