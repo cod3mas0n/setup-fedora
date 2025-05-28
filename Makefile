@@ -7,7 +7,7 @@ SHELL := /bin/bash
 .DEFAULT_GOAL := install-packages
 
 .PHONY: all
-all: dnf5-conf rpmfusion fonts install-packages remove-gnome-extras ansible virtualization proxychains-ng vscode terraform k8s-lens free-lens kubectx helm mimirtool minio-mc sing-box crontab postman nekoray hiddify extras end-message
+all: dnf5-conf rpmfusion fonts install-packages remove-gnome-extras ansible virtualization proxychains-ng vscode terraform k8s-lens free-lens kubectx helm mimirtool minio-mc sing-box crontab postman hiddify extras end-message
 
 .PHONY: dnf-configs
 dnf-configs: dnf5-conf dnf5-conf-proxy rpmfusion
@@ -58,7 +58,6 @@ MITOGEN_DOWNLOAD_URL := https://files.pythonhosted.org/packages/source/m/mitogen
 .PHONY: ansible
 ansible:
 	@sudo dnf install -y ansible ansible-lint ansible-galaxy
-	@sudo ansible-config init --disabled -t all > /${ANSIBLE_CFG_PATH}
 	@sudo mv /${ANSIBLE_CFG_PATH} /${ANSIBLE_CFG_PATH}.bak &> /dev/null | true
 	sudo ln -fs ${PWD}/${ANSIBLE_CFG_PATH} /${ANSIBLE_CFG_PATH}
 
