@@ -15,9 +15,11 @@ repos:
       - id: detect-private-key
 
   - repo: https://github.com/gitleaks/gitleaks
-    rev: v8.26.0
+    rev: v8.27.0
     hooks:
       - id: gitleaks
+        args: ["--pre-commit", "--redact", "--staged", "--verbose"]
+
   # gem needs to be installed
   - repo: https://github.com/markdownlint/markdownlint
     rev: v0.12.0

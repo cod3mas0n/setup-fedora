@@ -128,7 +128,7 @@ free-lens:
 	| cut -d '"' -f 4 \
 	| head -n 1 \
 	| xargs sudo curl -L -o /opt/freelens-linux-amd64.rpm
-	@if ! rpm -q freelens &> /dev/null ; then sudo dnf install -y /opt/freelens;fi
+	@sudo rpm --force -Uvh /opt/freelens-linux-amd64.rpm
 
 
 KUBERNETES_REPO_PATH := etc/yum.repos.d/kubernetes.repo
