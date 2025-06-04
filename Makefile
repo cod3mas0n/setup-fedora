@@ -46,7 +46,7 @@ install-packages:
 		gnome-extensions-app gnome-tweaks gnome-terminal gnome-terminal-nautilus \
 		htop btop thunderbird remmina ipython3 \
 		google-chrome-stable brave-browser chromium \
-		unrar keepassxc libreoffice tldr most \
+		unrar keepassxc libreoffice tldr most jq yq \
 		cowsay sshpass gnupg2 curl wget tar bat fzf alien rpm-build \
 		cronie libssh2 libayatana-appindicator3 libayatana-indicator-gtk3
 # https://mitogen.networkgenomics.com/ansible_detailed.html#installation
