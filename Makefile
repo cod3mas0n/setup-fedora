@@ -7,13 +7,16 @@ SHELL := /bin/bash
 .DEFAULT_GOAL := install-packages
 
 .PHONY: all
-all: dnf5-conf rpmfusion fonts install-packages remove-gnome-extras ansible virtualization proxychains-ng vscode terraform k8s-lens free-lens kubectx helm mimirtool minio-mc sing-box crontab postman hiddify extras end-message
+all: dnf5-conf rpmfusion fonts install-packages remove-gnome-extras \
+	ansible virtualization proxychains-ng vscode terraform k8s-lens \
+	free-lens kubectx helm mimirtool minio-mc sing-box crontab postman \
+	hiddify extras argocd end-message
 
 .PHONY: dnf-configs
 dnf-configs: dnf5-conf dnf5-conf-proxy rpmfusion
 
 .PHONY: k8s-tools
-k8s-tools: k8s-lens free-lens kubectx helm
+k8s-tools: k8s-lens free-lens kubectx helm argocd
 
 
 .PHONY: fonts
@@ -49,6 +52,7 @@ install-packages:
 		unrar keepassxc libreoffice tldr most jq yq \
 		cowsay sshpass gnupg2 curl wget tar bat fzf alien rpm-build \
 		cronie libssh2 libayatana-appindicator3 libayatana-indicator-gtk3
+
 # https://mitogen.networkgenomics.com/ansible_detailed.html#installation
 ANSIBLE_CFG_PATH := etc/ansible/ansible.cfg
 ANSIBLE_PLUINGS_DIR := /etc/ansible/plugins
@@ -127,8 +131,8 @@ free-lens:
 	| grep -v '\.sha256' \
 	| cut -d '"' -f 4 \
 	| head -n 1 \
-	| xargs sudo curl -L -o /opt/freelens-linux-amd64.rpm
-	@sudo rpm --force -Uvh /opt/freelens-linux-amd64.rpm
+	| xargs sudo curl -L -o /tmp/freelens-linux-amd64.rpm
+	@sudo rpm --force -Uvh /tmp/freelens-linux-amd64.rpm
 
 
 KUBERNETES_REPO_PATH := etc/yum.repos.d/kubernetes.repo
@@ -152,9 +156,9 @@ helm:
 
 .PHONY: mimirtool
 mimirtool:
-	sudo curl -fsSLo /opt/mimirtool https://github.com/grafana/mimir/releases/latest/download/mimirtool-linux-amd64
-	@sudo mv /opt/mimirtool /usr/local/bin/mimirtool
-	@sudo chmod +x /usr/local/bin/mimirtool
+	sudo curl -fsSLo /tmp/mimirtool https://github.com/grafana/mimir/releases/latest/download/mimirtool-linux-amd64
+	@sudo mv /tmp/mimirtool /usr/local/bin/mimirtool
+	sudo install -m 555 /tmp/mimirtool /usr/local/bin/mimirtool
 
 
 .PHONY: minio-mc
@@ -163,13 +167,21 @@ minio-mc:
 	curl https://dl.min.io/client/mc/release/linux-amd64/mc --create-dirs -o ${HOME}/.minio-binaries/mc
 	@chmod +x ${HOME}/.minio-binaries/mc
 
-GOLANG_VERSION := go1.24.3.linux-amd64.tar.gz
+# https://argo-cd.readthedocs.io/en/stable/cli_installation/#download-latest-stable-version
+ARGOCD_LATEST := https://raw.githubusercontent.com/argoproj/argo-cd/stable/VERSION
+.PHONY: argocd
+argocd:
+	@echo "Fetching latest Argo CD version..."
+	$(eval ARGOCD_VERSION := $(shell curl -L -s "${ARGOCD_LATEST}"))
+	curl -sSL -o /tmp/argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/download/v${ARGOCD_VERSION}/argocd-linux-amd64
+	@sudo install -m 555 /tmp/argocd-linux-amd64 /usr/local/bin/argocd
 
+GOLANG_VERSION := go1.24.3.linux-amd64.tar.gz
 .PHONY: golang
 golang:
-	@sudo rm -rf /opt/${GOLANG_VERSION}
-	sudo curl -fsSL https://go.dev/dl/${GOLANG_VERSION} -o /opt/${GOLANG_VERSION}
-	sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf /opt/${GOLANG_VERSION}
+	@sudo rm -rf /tmp/${GOLANG_VERSION}
+	sudo curl -fsSL https://go.dev/dl/${GOLANG_VERSION} -o /tmp/${GOLANG_VERSION}
+	sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf /tmp/${GOLANG_VERSION}
 
 .PHONY: sing-box
 sing-box:
@@ -195,7 +207,7 @@ NEKORAY_DESKTOP_ENTRY := usr/share/applications/nekoray.desktop
 
 .PHONY: nekoray
 nekoray:
-	@sudo mkdir -p /opt/nekoray
+	@sudo mkdir -p /tmp/nekoray
 	@echo "Fetching latest Nekoray release URL..."
 	curl -fsSL ${NEKORAY_LATEST} \
 	| grep "browser_download_url" \
@@ -204,15 +216,15 @@ nekoray:
 	| head -n 1 \
 	| tee /tmp/nekoray_url.txt && \
 	\
-	pushd /opt/nekoray &> /dev/null && \
+	pushd /tmp/nekoray &> /dev/null && \
 	sudo curl -LO "$$(cat /tmp/nekoray_url.txt)" && \
 	\
 	zipfile="$$(basename $$(cat /tmp/nekoray_url.txt))" && \
 	sudo unzip -o "$$zipfile" && \
 	sudo rm -rf /usr/lib64/nekoray &> /dev/null | true && \
-	sudo mv /opt/nekoray/nekoray /usr/lib64/ && \
+	sudo mv /tmp/nekoray/nekoray /usr/lib64/ && \
 	popd &> /dev/null && \
-	echo "Nekoray installed in /usr/lib64/nekoray "
+	echo "Nekoray installed in /usr/lib64/nekoray"
 
 	sudo ln -fs ${PWD}/${NEKORAY_DESKTOP_ENTRY} /${NEKORAY_DESKTOP_ENTRY}
 
@@ -225,8 +237,8 @@ hiddify:
 	| grep "browser_download_url" \
 	| grep -E "Hiddify-rpm-x64.rpm" \
 	| cut -d '"' -f 4 \
-	| xargs sudo curl -L -o /opt/Hiddify-rpm-x64.rpm
-	@sudo rpm -Uvh /opt/Hiddify-rpm-x64.rpm
+	| xargs sudo curl -L -o /tmp/Hiddify-rpm-x64.rpm
+	@sudo rpm -Uvh /tmp/Hiddify-rpm-x64.rpm
 
 .PHONY: extras
 extras:
