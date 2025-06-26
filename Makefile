@@ -21,11 +21,13 @@ k8s-tools: k8s-lens free-lens kubectx helm argocd
 
 .PHONY: fonts
 fonts:
+	@echo " ========== Installing Fonts: FiraCode, ... "
 	sudo dnf install -y fira-code-fonts
 
 CUSTOM_DNF_CONFIGURATION_FILE := etc/dnf/libdnf5.conf.d/20-user-settings.conf
 .PHONY: dnf5-conf
 dnf5-conf:
+	@echo " ========== Setting Proxy Server for dnf ... "
 	sudo ln -fs ${PWD}/${CUSTOM_DNF_CONFIGURATION_FILE} /${CUSTOM_DNF_CONFIGURATION_FILE}
 
 	@sudo dnf update -y
@@ -36,13 +38,19 @@ dnf5-conf:
 # main format is $(rpm -E %fedora)
 # https://rpmfusion.org/Configuration
 rpmfusion:
+	@echo " ========== Installing rpmfusion repositories ... "
 	@sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(shell rpm -E %fedora).noarch.rpm
 	@sudo dnf install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(shell rpm -E %fedora).noarch.rpm
 
 .PHONY: install-packages
 install-packages:
+	@echo " ========== Installing Essentials Packages ... "
+	@echo " installing development-tools "
 	@sudo dnf group install -y development-tools
+
+	@echo "installing Brave Browser Repo... "
 	@sudo dnf config-manager addrepo --overwrite --from-repofile=https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
+
 	@sudo dnf install -y python3-devel ruby-devel make cmake g++ gcc \
 		ffmpeg-free smplayer vlc gnome-mpv mplayer \
 		gimp gimp-data-extras telegram-desktop \
@@ -61,6 +69,7 @@ MITOGEN_DOWNLOAD_URL := https://files.pythonhosted.org/packages/source/m/mitogen
 
 .PHONY: ansible
 ansible:
+	@echo " ========== Installing ansible ... "
 	@sudo dnf install -y ansible ansible-lint ansible-galaxy
 	@sudo mv /${ANSIBLE_CFG_PATH} /${ANSIBLE_CFG_PATH}.bak &> /dev/null | true
 	sudo ln -fs ${PWD}/${ANSIBLE_CFG_PATH} /${ANSIBLE_CFG_PATH}
@@ -75,6 +84,7 @@ ansible:
 # https://docs.fedoraproject.org/en-US/quick-docs/virtualization-getting-started/
 .PHONY: virtualization
 virtualization:
+	@echo " ========== Installing Qemu/KVM Virtualization... "
 	@sudo dnf install -y @virtualization
 	@sudo dnf group install -y --with-optional virtualization
 	@sudo systemctl start libvirtd
@@ -84,13 +94,15 @@ virtualization:
 
 .PHONY: remove-gnome-extras
 remove-gnome-extras:
+	@echo " ========== Uninstalling Extra/unused packages in Gnome... "
 	@sudo dnf remove -y gnome-boxes gnome-maps \
 		gnome-contacts rhythmbox gnome-weather
 
 PROXYCHAINS_DIR := /opt/proxychains-ng
 .PHONY: proxychains-ng
 proxychains-ng:
-	@ sudo rm -rf ${PROXYCHAINS_DIR} &> /dev/null | true
+	@sudo rm -rf ${PROXYCHAINS_DIR} &> /dev/null | true
+	@echo " ========== Installing Proxychains4 from source... "
 	@sudo git clone https://github.com/rofl0r/proxychains-ng.git ${PROXYCHAINS_DIR}
 	@pushd ${PROXYCHAINS_DIR} &> /dev/null && \
 		sudo ./configure --prefix=/usr --sysconfdir=/etc && \
@@ -98,6 +110,7 @@ proxychains-ng:
 		sudo $(MAKE) install && \
 		sudo $(MAKE) install-config && \
 		popd &> /dev/null
+	@echo " ========== Linking Custom Proxychains4 Configuration ... "
 	sudo ln -fs ${PWD}/etc/proxychains.conf /etc/proxychains.conf
 
 # https://code.visualstudio.com/docs/setup/linux#_rhel-fedora-and-centos-based-distributions
@@ -105,25 +118,30 @@ proxychains-ng:
 VSCODE_REPO_PATH := etc/yum.repos.d/vscode.repo
 .PHONY: vscode
 vscode:
+	@echo " ========== Importing/Installing Microsoft Vscode Keys/Repo... "
 	@sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
 	sudo ln -fs ${PWD}/${VSCODE_REPO_PATH} /${VSCODE_REPO_PATH}
+	@echo " ========== Installing Microsoft Vscode ... "
 	@sudo dnf -y check-update
 	@sudo dnf install -y code
 
 .PHONY: terraform
 terraform:
+	@echo " ========== Installing Terraform ... "
 	@sudo dnf install -y dnf-plugins-core
 	@sudo dnf config-manager addrepo --overwrite --from-repofile=https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
 	@sudo dnf install -y terraform
 
 .PHONY: k8s-lens
 k8s-lens:
+	@echo " ========== Installing Kubernetes Lens ... "
 	@sudo dnf config-manager addrepo --overwrite --from-repofile=https://downloads.k8slens.dev/rpm/lens.repo
 	@sudo dnf install -y lens
 
 FREE_LENS_LATEST := https://api.github.com/repos/freelensapp/freelens/releases/latest
 .PHONY: free-lens
 free-lens:
+	@echo " ========== Installing FreeLens ... "
 	@echo "Fetching latest FreeLens..."
 	curl -fsSL ${FREE_LENS_LATEST} \
 	| grep "browser_download_url" \
@@ -138,11 +156,13 @@ free-lens:
 KUBERNETES_REPO_PATH := etc/yum.repos.d/kubernetes.repo
 .PHONY: kubectl
 kubectl:
+	@echo " ========== Installing Kubectl ... "
 	@sudo ln -fs ${PWD}/${KUBERNETES_REPO_PATH} /${KUBERNETES_REPO_PATH}
 	@sudo dnf install -y kubectl
 
 .PHONY: kubectx
 kubectx:
+	@echo " ========== Installing Kubectx/Kubens ... "
 	@sudo rm -rf /opt/kubectx &> /dev/null | true
 	@sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
 	sudo ln -fs /opt/kubectx/kubectx /usr/local/bin/kubectx
@@ -150,12 +170,14 @@ kubectx:
 
 .PHONY: helm
 helm:
+	@echo " ========== Installing Kubernetes Helm Package Manager ... "
 	@sudo dnf install -y helm
 	@helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 	@helm repo update
 
 .PHONY: mimirtool
 mimirtool:
+	@echo " ========== Installing Grafana Mimirtool ... "
 	sudo curl -fsSLo /tmp/mimirtool https://github.com/grafana/mimir/releases/latest/download/mimirtool-linux-amd64
 	@sudo mv /tmp/mimirtool /usr/local/bin/mimirtool
 	sudo install -m 555 /tmp/mimirtool /usr/local/bin/mimirtool
@@ -163,6 +185,7 @@ mimirtool:
 
 .PHONY: minio-mc
 minio-mc:
+	@echo " ========== Installing Minio mc (minio client) ... "
 	@rm -rf ${HOME}/.minio-binaries/mc &> /dev/null | true
 	curl https://dl.min.io/client/mc/release/linux-amd64/mc --create-dirs -o ${HOME}/.minio-binaries/mc
 	@chmod +x ${HOME}/.minio-binaries/mc
@@ -171,6 +194,7 @@ minio-mc:
 ARGOCD_LATEST := https://raw.githubusercontent.com/argoproj/argo-cd/stable/VERSION
 .PHONY: argocd
 argocd:
+	@echo " ========== Installing ArgoCD CLI... "
 	@echo "Fetching latest Argo CD version..."
 	$(eval ARGOCD_VERSION := $(shell curl -L -s "${ARGOCD_LATEST}"))
 	curl -sSL -o /tmp/argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/download/v${ARGOCD_VERSION}/argocd-linux-amd64
@@ -179,18 +203,15 @@ argocd:
 GOLANG_VERSION := go1.24.3.linux-amd64.tar.gz
 .PHONY: golang
 golang:
+	@echo " ========== Installing GoLang... "
 	@sudo rm -rf /tmp/${GOLANG_VERSION}
 	sudo curl -fsSL https://go.dev/dl/${GOLANG_VERSION} -o /tmp/${GOLANG_VERSION}
 	sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf /tmp/${GOLANG_VERSION}
 
-.PHONY: sing-box
-sing-box:
-	@sudo dnf config-manager addrepo --overwrite --from-repofile=https://sing-box.app/sing-box.repo
-	@sudo dnf install -y sing-box
-
 ETC_CRONTAB_PATH := etc/crontab
 .PHONY: crontab
 crontab:
+	@echo " ========== Setting Custom Crontab Template ... "
 	@sudo dnf install -y cronie
 	@sudo mv ${ETC_CRONTAB_PATH} /opt/${ETC_CRONTAB_PATH}.bak &> /dev/null | true
 	sudo ln -sf ${PWD}/${ETC_CRONTAB_PATH} /${ETC_CRONTAB_PATH}
@@ -198,15 +219,23 @@ crontab:
 POSTMAN_DESKTOP_ENTRY := usr/share/applications/postman.desktop
 .PHONY: postman
 postman:
+	@echo " ========== Installing Postman ... "
 	sudo curl -fsSL https://dl.pstmn.io/download/latest/linux_64 -o /opt/postman-linux-x64.tar.gz
 	@sudo tar -C /opt -xzf /opt/postman-linux-x64.tar.gz
 	sudo ln -sf ${PWD}/${POSTMAN_DESKTOP_ENTRY} /${POSTMAN_DESKTOP_ENTRY}
+
+.PHONY: sing-box
+sing-box:
+	@echo " ========== Installing Sing-Box ... "
+	@sudo dnf config-manager addrepo --overwrite --from-repofile=https://sing-box.app/sing-box.repo
+	@sudo dnf install -y sing-box
 
 NEKORAY_LATEST := https://api.github.com/repos/MatsuriDayo/nekoray/releases/latest
 NEKORAY_DESKTOP_ENTRY := usr/share/applications/nekoray.desktop
 
 .PHONY: nekoray
 nekoray:
+	@echo " ========== Installing NekorayFrom Source... "
 	@sudo mkdir -p /tmp/nekoray
 	@echo "Fetching latest Nekoray release URL..."
 	curl -fsSL ${NEKORAY_LATEST} \
@@ -232,6 +261,7 @@ HIDDIFY_LATEST := https://api.github.com/repos/hiddify/hiddify-next/releases/lat
 
 .PHONY: hiddify
 hiddify:
+	@echo " ========== Installing Hiddify... "
 	@echo "Fetching latest Hiddify release URL..."
 	curl -fsSL ${HIDDIFY_LATEST} \
 	| grep "browser_download_url" \
