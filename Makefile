@@ -179,7 +179,6 @@ helm:
 mimirtool:
 	@echo " ========== Installing Grafana Mimirtool ... "
 	sudo curl -fsSLo /tmp/mimirtool https://github.com/grafana/mimir/releases/latest/download/mimirtool-linux-amd64
-	@sudo mv /tmp/mimirtool /usr/local/bin/mimirtool
 	sudo install -m 555 /tmp/mimirtool /usr/local/bin/mimirtool
 
 
@@ -200,7 +199,7 @@ argocd:
 	curl -sSL -o /tmp/argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/download/v${ARGOCD_VERSION}/argocd-linux-amd64
 	@sudo install -m 555 /tmp/argocd-linux-amd64 /usr/local/bin/argocd
 
-GOLANG_VERSION := go1.24.3.linux-amd64.tar.gz
+GOLANG_VERSION := go1.25.1.linux-amd64.tar.gz
 .PHONY: golang
 golang:
 	@echo " ========== Installing GoLang... "
