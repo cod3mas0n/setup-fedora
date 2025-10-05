@@ -54,7 +54,8 @@ install-packages:
 	@sudo dnf install -y python3-devel ruby-devel make cmake g++ gcc \
 		ffmpeg-free smplayer vlc gnome-mpv mplayer \
 		gimp gimp-data-extras telegram-desktop \
-		gnome-extensions-app gnome-tweaks gnome-terminal gnome-terminal-nautilus \
+		gnome-extensions-app gnome-tweaks gnome-terminal \
+		gnome-themes-extra gnome-terminal-nautilus \
 		htop btop thunderbird remmina ipython3 \
 		google-chrome-stable brave-browser chromium \
 		unrar keepassxc libreoffice tldr most jq yq \
