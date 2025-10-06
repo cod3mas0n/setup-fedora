@@ -96,7 +96,8 @@ virtualization:
 remove-gnome-extras:
 	@echo " ========== Uninstalling Extra/unused packages in Gnome... "
 	@sudo dnf remove -y gnome-boxes gnome-maps \
-		gnome-contacts rhythmbox gnome-weather
+		gnome-contacts rhythmbox gnome-weather \
+		gnome-software
 
 PROXYCHAINS_DIR := /opt/proxychains-ng
 .PHONY: proxychains-ng
