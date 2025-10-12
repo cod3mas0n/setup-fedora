@@ -56,7 +56,7 @@ install-packages:
 		gimp gimp-data-extras telegram-desktop \
 		gnome-extensions-app gnome-tweaks gnome-terminal \
 		gnome-themes-extra gnome-terminal-nautilus \
-		htop btop thunderbird remmina ipython3 \
+		htop btop thunderbird remmina ipython3 pwgen \
 		google-chrome-stable brave-browser chromium \
 		unrar keepassxc libreoffice tldr most jq yq \
 		cowsay sshpass gnupg2 curl wget tar bat fzf alien rpm-build \
