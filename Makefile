@@ -61,7 +61,8 @@ install-packages:
 		unrar keepassxc libreoffice tldr most jq yq \
 		cowsay sshpass gnupg2 curl wget tar bat fzf alien rpm-build \
 		cronie libssh2 libayatana-appindicator3 libayatana-indicator-gtk3 \
-		libgtop2-devel NetworkManager-libnm-devel gnome-system-monitor cheese
+		libgtop2-devel NetworkManager-libnm-devel gnome-system-monitor cheese \
+		xl2tpd libreswan NetworkManager-l2tp NetworkManager-l2tp-gnome
 
 # https://mitogen.networkgenomics.com/ansible_detailed.html#installation
 ANSIBLE_CFG_PATH := etc/ansible/ansible.cfg
