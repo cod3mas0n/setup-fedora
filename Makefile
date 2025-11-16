@@ -52,7 +52,7 @@ install-packages:
 	@sudo dnf config-manager addrepo --overwrite --from-repofile=https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
 
 	@sudo dnf install -y python3-devel ruby-devel make cmake g++ gcc \
-		ffmpeg-free smplayer vlc gnome-mpv mplayer \
+		ffmpeg-free smplayer smplayer-themes smtube vlc gnome-mpv mpv mplayer \
 		gimp gimp-data-extras telegram-desktop \
 		gnome-extensions-app gnome-tweaks gnome-terminal \
 		gnome-themes-extra gnome-terminal-nautilus \
@@ -62,7 +62,6 @@ install-packages:
 		cowsay sshpass gnupg2 curl wget tar bat fzf alien rpm-build \
 		cronie libssh2 libayatana-appindicator3 libayatana-indicator-gtk3 \
 		libgtop2-devel NetworkManager-libnm-devel gnome-system-monitor cheese \
-		xl2tpd libreswan NetworkManager-l2tp NetworkManager-l2tp-gnome
 
 # https://mitogen.networkgenomics.com/ansible_detailed.html#installation
 ANSIBLE_CFG_PATH := etc/ansible/ansible.cfg
@@ -78,7 +77,7 @@ ansible:
 	sudo ln -fs ${PWD}/${ANSIBLE_CFG_PATH} /${ANSIBLE_CFG_PATH}
 
 	@sudo mkdir -p ${ANSIBLE_PLUINGS_DIR}
-	sudo curl -fsSL ${MITOGEN_DOWNLOAD_URL} -o ${ANSIBLE_PLUINGS_DIR}/mitogen-${MITOGEN_VERSION}.tar.gz
+	sudo curl -fSL ${MITOGEN_DOWNLOAD_URL} -o ${ANSIBLE_PLUINGS_DIR}/mitogen-${MITOGEN_VERSION}.tar.gz
 	@pushd ${ANSIBLE_PLUINGS_DIR} &> /dev/null && \
 		sudo tar xzf mitogen-${MITOGEN_VERSION}.tar.gz && \
 		popd &> /dev/null
@@ -147,13 +146,13 @@ FREE_LENS_LATEST := https://api.github.com/repos/freelensapp/freelens/releases/l
 free-lens:
 	@echo " ========== Installing FreeLens ... "
 	@echo "Fetching latest FreeLens..."
-	curl -fsSL ${FREE_LENS_LATEST} \
+	curl -fSL ${FREE_LENS_LATEST} \
 	| grep "browser_download_url" \
 	| grep -E 'linux-amd64\.rpm"' \
 	| grep -v '\.sha256' \
 	| cut -d '"' -f 4 \
 	| head -n 1 \
-	| xargs sudo curl -L -o /tmp/freelens-linux-amd64.rpm
+	| xargs sudo curl -fSL -o /tmp/freelens-linux-amd64.rpm
 	@sudo rpm --force -Uvh /tmp/freelens-linux-amd64.rpm
 
 
@@ -182,7 +181,7 @@ helm:
 .PHONY: mimirtool
 mimirtool:
 	@echo " ========== Installing Grafana Mimirtool ... "
-	sudo curl -fsSLo /tmp/mimirtool https://github.com/grafana/mimir/releases/latest/download/mimirtool-linux-amd64
+	sudo curl -fSLo /tmp/mimirtool https://github.com/grafana/mimir/releases/latest/download/mimirtool-linux-amd64
 	sudo install -m 555 /tmp/mimirtool /usr/local/bin/mimirtool
 
 
@@ -190,7 +189,7 @@ mimirtool:
 minio-mc:
 	@echo " ========== Installing Minio mc (minio client) ... "
 	@rm -rf ${HOME}/.minio-binaries/mc &> /dev/null | true
-	curl https://dl.min.io/client/mc/release/linux-amd64/mc --create-dirs -o ${HOME}/.minio-binaries/mc
+	curl -fSL https://dl.min.io/client/mc/release/linux-amd64/mc --create-dirs -o ${HOME}/.minio-binaries/mc
 	@chmod +x ${HOME}/.minio-binaries/mc
 
 # https://argo-cd.readthedocs.io/en/stable/cli_installation/#download-latest-stable-version
@@ -199,16 +198,16 @@ ARGOCD_LATEST := https://raw.githubusercontent.com/argoproj/argo-cd/stable/VERSI
 argocd:
 	@echo " ========== Installing ArgoCD CLI... "
 	@echo "Fetching latest Argo CD version..."
-	$(eval ARGOCD_VERSION := $(shell curl -L -s "${ARGOCD_LATEST}"))
-	curl -sSL -o /tmp/argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/download/v${ARGOCD_VERSION}/argocd-linux-amd64
+	$(eval ARGOCD_VERSION := $(shell curl -fSL "${ARGOCD_LATEST}"))
+	curl -fSL -o /tmp/argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/download/v${ARGOCD_VERSION}/argocd-linux-amd64
 	@sudo install -m 555 /tmp/argocd-linux-amd64 /usr/local/bin/argocd
 
-GOLANG_VERSION := go1.25.1.linux-amd64.tar.gz
+GOLANG_VERSION := go1.25.4.linux-amd64.tar.gz
 .PHONY: golang
 golang:
 	@echo " ========== Installing GoLang... "
 	@sudo rm -rf /tmp/${GOLANG_VERSION}
-	sudo curl -fsSL https://go.dev/dl/${GOLANG_VERSION} -o /tmp/${GOLANG_VERSION}
+	sudo curl -fSL https://go.dev/dl/${GOLANG_VERSION} -o /tmp/${GOLANG_VERSION}
 	sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf /tmp/${GOLANG_VERSION}
 
 ETC_CRONTAB_PATH := etc/crontab
@@ -223,7 +222,7 @@ POSTMAN_DESKTOP_ENTRY := usr/share/applications/postman.desktop
 .PHONY: postman
 postman:
 	@echo " ========== Installing Postman ... "
-	sudo curl -fsSL https://dl.pstmn.io/download/latest/linux_64 -o /opt/postman-linux-x64.tar.gz
+	sudo curl -fSL https://dl.pstmn.io/download/latest/linux_64 -o /opt/postman-linux-x64.tar.gz
 	@sudo tar -C /opt -xzf /opt/postman-linux-x64.tar.gz
 	sudo ln -sf ${PWD}/${POSTMAN_DESKTOP_ENTRY} /${POSTMAN_DESKTOP_ENTRY}
 
@@ -241,7 +240,7 @@ nekoray:
 	@echo " ========== Installing NekorayFrom Source... "
 	@sudo mkdir -p /tmp/nekoray
 	@echo "Fetching latest Nekoray release URL..."
-	curl -fsSL ${NEKORAY_LATEST} \
+	curl -fSL ${NEKORAY_LATEST} \
 	| grep "browser_download_url" \
 	| grep -E "linux64.zip" \
 	| cut -d '"' -f 4 \
@@ -249,7 +248,7 @@ nekoray:
 	| tee /tmp/nekoray_url.txt && \
 	\
 	pushd /tmp/nekoray &> /dev/null && \
-	sudo curl -LO "$$(cat /tmp/nekoray_url.txt)" && \
+	sudo curl -fSLO "$$(cat /tmp/nekoray_url.txt)" && \
 	\
 	zipfile="$$(basename $$(cat /tmp/nekoray_url.txt))" && \
 	sudo unzip -o "$$zipfile" && \
@@ -266,11 +265,11 @@ HIDDIFY_LATEST := https://api.github.com/repos/hiddify/hiddify-next/releases/lat
 hiddify:
 	@echo " ========== Installing Hiddify... "
 	@echo "Fetching latest Hiddify release URL..."
-	curl -fsSL ${HIDDIFY_LATEST} \
+	curl -fSL ${HIDDIFY_LATEST} \
 	| grep "browser_download_url" \
 	| grep -E "Hiddify-rpm-x64.rpm" \
 	| cut -d '"' -f 4 \
-	| xargs sudo curl -L -o /tmp/Hiddify-rpm-x64.rpm
+	| xargs sudo curl -fSL -o /tmp/Hiddify-rpm-x64.rpm
 	@sudo rpm -Uvh /tmp/Hiddify-rpm-x64.rpm
 
 .PHONY: extras
