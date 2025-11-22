@@ -1,0 +1,4 @@
+style '.mdl_style.rb'
+git_recurse true
+ignore_code_blocks true
+ignore_front_matter true

@@ -1,0 +1,39 @@
+---
+# https://yamllint.readthedocs.io/en/stable/configuration.html#
+extends: default
+
+ignore: |
+  .git/
+
+# https://yamllint.readthedocs.io/en/stable/configuration.html#yaml-files-extensions
+yaml-files:
+  - '*.yaml'
+  - '*.yml'
+  - .yamllint
+
+# https://yamllint.readthedocs.io/en/stable/rules.html
+rules:
+  document-start:
+    present: true
+  document-end:
+    present: true
+  indentation:
+    spaces: 2
+  line-length:
+    max: 180
+    level: warning
+  comments:
+    require-starting-space: true
+    ignore-shebangs: true
+    min-spaces-from-content: 1
+  comments-indentation: false
+  braces:
+    forbid: false
+    max-spaces-inside: 1
+  brackets:
+    min-spaces-inside: 0
+  octal-values:
+    forbid-implicit-octal: true
+    forbid-explicit-octal: true
+
+...

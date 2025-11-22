@@ -1,9 +1,7 @@
 ---
 repos:
-  # pre-commit install --all to install whatever in .pre-commit-config.yaml
-  # pre-commit run --all-files
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
       - id: check-merge-conflict
       - id: end-of-file-fixer
@@ -14,14 +12,29 @@ repos:
       - id: check-symlinks
       - id: detect-private-key
 
-  - repo: https://github.com/gitleaks/gitleaks
-    rev: v8.27.0
+  - repo: https://github.com/jumanjihouse/pre-commit-hooks
+    rev: 3.0.0
     hooks:
-      - id: gitleaks
-        args: ["--pre-commit", "--redact", "--staged", "--verbose"]
+      - id: shellcheck
+        args: [--severity, "error"]
+        exclude: "^.git"
+        files: "\\.sh$"
 
-  # gem needs to be installed
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.37.1
+    hooks:
+      - id: yamllint
+        args: ["-c", ".yamllint"]
+
   - repo: https://github.com/markdownlint/markdownlint
     rev: v0.12.0
     hooks:
       - id: markdownlint
+
+# Security
+
+  - repo: https://github.com/trufflesecurity/trufflehog
+    rev: v3.91.1
+    hooks:
+      - id: trufflehog
+...
