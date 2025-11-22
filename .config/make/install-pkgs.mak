@@ -18,12 +18,13 @@ install-packages: ## Install Essential Packages
 		htop remmina pwgen \
 		unrar keepassxc \
 		libreoffice tldr \
-		most jq yq cowsay \
+		most jq yq cowsay bat \
 		gnupg2 curl wget tar \
 		bat fzf alien rpm-build \
 		cronie libssh2 sshpass \
 		NetworkManager-libnm-devel \
-		okular libgtop2-devel
+		okular libgtop2-devel \
+		ShellCheck
 
 
 .PHONY: install-devel-tools
