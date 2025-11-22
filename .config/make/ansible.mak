@@ -2,7 +2,7 @@
 
 ANSIBLE_CFG_PATH := etc/ansible/ansible.cfg
 ANSIBLE_PLUINGS_DIR := /etc/ansible/plugins
-MITOGEN_VERSION := 0.3.31
+MITOGEN_VERSION := 0.3.33
 MITOGEN_DOWNLOAD_URL := https://files.pythonhosted.org/packages/source/m/mitogen/mitogen-${MITOGEN_VERSION}.tar.gz
 
 
@@ -23,4 +23,4 @@ ansible-mitogen: ## Install and Configure Ansible Mitogen
 	@pushd ${ANSIBLE_PLUINGS_DIR} &> /dev/null && \
 		sudo tar xzf mitogen-${MITOGEN_VERSION}.tar.gz && \
 		popd &> /dev/null
-	sudo sed -i "s|^strategy_plugins=.*/mitogen-[0-9.]\+/ansible_mitogen/plugins/strategy|strategy_plugins=/etc/plugins/mitogen-${MITOGEN_VERSION}/ansible_mitogen/plugins/strategy|" /${ANSIBLE_CFG_PATH}
+	sudo sed -i --follow-symlinks "s|^strategy_plugins=.*/mitogen-[0-9.]\+/ansible_mitogen/plugins/strategy|strategy_plugins=/etc/ansible/plugins/mitogen-${MITOGEN_VERSION}/ansible_mitogen/plugins/strategy|" /${ANSIBLE_CFG_PATH}
