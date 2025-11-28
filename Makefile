@@ -1,8 +1,10 @@
 .PHONY: all SHELL
-all: devops-tools kubernetes-tools \
-	programming virtualization vpn-proxy \
-	gnome-settings install-pkgs dnf-configs \
-	fonts extras crontab
+all: vpn-proxy dnf-configs \
+	fonts install-pkgs \
+	gnome-settings \
+	programming virtualization \
+	devops-tools kubernetes-tools \
+	extras crontab \
 
 # Makefile global config
 # Use config.mak to override any of the following variables.

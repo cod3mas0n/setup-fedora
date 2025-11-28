@@ -2,18 +2,20 @@
 
 ## Description
 
-Setup a fresh fedora linux in new workstation or laptop.
+Setup an configure fresh Fedora linux in a new workstation.
 
 ## Features
 
-- setup `dnf.conf` and `proxy` for dnf
-- enable `rpmfusion` repos
-- install favorite fonts
-- install all packages and applications
-- remove extra and useless packages for me
-- install `ansible`, `mitogen` for ansible and generates `ansible.cfg`
-- install `virtualization`
-- setup `proxychains-ng`
+- Setup `/etc/dnf/libdnf5.conf.d/20-user-settings.conf` and `proxy` for dnf.
+- Enable `rpmfusion` repositories.
+- install favorite fonts :
+  - Fira Code
+  - Persian Fonts
+- Install essential packages and applications.
+- Remove extra and useless packages and gnome applications.
+- Install and configure `ansible`, `ansible-mitogen` for ansible and generates `ansible.cfg`.
+- Install QEMU/KVM `virtualization`.
+- Setup VPN (Proxy) tools such as `proxychains-ng`.
 
 ## Requirements
 
@@ -26,8 +28,8 @@ dnf install -y git make cmake g++ gcc tmux vim
 ## Example usage
 
 ```bash
-git clone https://github.com/AliMehraji/fedora-setup.git
-cd workstation-setup/fedora
+git clone https://github.com/cod3mas0n/setup-fedora.git
+cd setup-fedora
 make all
 ```
 

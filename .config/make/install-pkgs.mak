@@ -25,6 +25,7 @@ install-packages: ## Install Essential Packages
 		NetworkManager-libnm-devel \
 		okular libgtop2-devel \
 		ShellCheck
+	@pip3 install -U pre-commit
 
 
 .PHONY: install-devel-tools
