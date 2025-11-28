@@ -68,11 +68,13 @@ vpn-proxy: proxychains-ng sing-box \
 	v2rayn-client
 
 .PHONY: gnome-settings
-gnome-settings: gnome-extras \
+gnome-settings: install-pkgs fonts \
+	gnome-extras \
 	gnome-keyboard-shortcuts \
 	gnome-launchers-shortcuts \
 	gnome-interface-settings \
-	gnome-power-settings
+	gnome-power-settings \
+	gnome-terminal
 
 .PHONY: install-pkgs
 install-pkgs: rpmfusion \
@@ -81,7 +83,7 @@ install-pkgs: rpmfusion \
 	install-multimedia install-gnome-utils
 
 .PHONY: dnf-configs
-dnf-configs: dnf5-conf
+dnf-configs: vpn-proxy dnf5-conf
 
 .PHONY: fonts
 fonts: fira-code-fonts persian-fonts
