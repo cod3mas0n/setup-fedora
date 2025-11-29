@@ -2,15 +2,15 @@
 
 .PHONY: gnome-extras
 gnome-extras: ## Remove Extra/useless Gnome Applications
-	@echo "## —— Uninstalling Extra/unused packages in Gnome --------------------------------------------------"
-	@sudo dnf remove -y \
+	echo "## —— Uninstalling Extra/unused packages in Gnome --------------------------------------------------"
+	sudo dnf remove -y \
 		gnome-boxes gnome-maps \
 		gnome-contacts rhythmbox gnome-weather \
 		gnome-software
 
 .PHONY: gnome-keyboard-shortcuts
 gnome-keyboard-shortcuts: ## Apply Gnome Custom Keyboard Shortcuts
-	@echo "## —— Gnome Keyboard Custom Shortcuts --------------------------------------------------------------"
+	echo "## —— Gnome Keyboard Custom Shortcuts --------------------------------------------------------------"
 	gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
 	gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'Gnome Terminal'
 	gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command '/usr/bin/gnome-terminal'
@@ -18,7 +18,7 @@ gnome-keyboard-shortcuts: ## Apply Gnome Custom Keyboard Shortcuts
 
 .PHONY: gnome-launchers-shortcuts
 gnome-launchers-shortcuts: ## Apply Gnome Custom Application Launchers Shortcuts
-	@echo "## —— Gnome Launchers Shortcuts --------------------------------------------------------------------"
+	echo "## —— Gnome Launchers Shortcuts --------------------------------------------------------------------"
 	gsettings set org.gnome.settings-daemon.plugins.media-keys home '<Super>e'
 	gsettings set org.gnome.settings-daemon.plugins.media-keys email ['<Super>q']
 	gsettings set org.gnome.settings-daemon.plugins.media-keys www ['<Super>w']
@@ -27,7 +27,7 @@ gnome-launchers-shortcuts: ## Apply Gnome Custom Application Launchers Shortcuts
 .PHONY: gnome-interface-settings
 gnome-interface-settings: ## Apply Gnome Custom Interface Settings
 
-	@echo "## —— Gnome Interface settings ---------------------------------------------------------------------"
+	echo "## —— Gnome Interface settings ---------------------------------------------------------------------"
 	gsettings set org.gnome.desktop.wm.preferences button-layout 'close,maximize,minimize:appmenu'
 
 	gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
@@ -38,7 +38,7 @@ gnome-interface-settings: ## Apply Gnome Custom Interface Settings
 
 .PHONY: gnome-power-settings
 gnome-power-settings: ## Apply Gnome Custom Power Settings
-	@echo "## —— Gnome Power Settings -------------------------------------------------------------------------"
+	echo "## —— Gnome Power Settings -------------------------------------------------------------------------"
 	gsettings set org.gnome.desktop.interface show-battery-percentage true
 	gsettings set org.gnome.settings-daemon.plugins.power ambient-enabled true
 	gsettings set org.gnome.settings-daemon.plugins.power power-button-action 'suspend'
@@ -53,5 +53,5 @@ gnome-power-settings: ## Apply Gnome Custom Power Settings
 
 .PHONY: gnome-terminal
 gnome-terminal: ## Apply Gnome Terminal Custom Preferences
-	@echo "## —— Running GNOME Terminal configuration ---------------------------------------------------------"
+	echo "## —— Running GNOME Terminal configuration ---------------------------------------------------------"
 	./scripts/configure-gnome-terminal.sh
