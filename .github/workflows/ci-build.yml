@@ -1,0 +1,27 @@
+---
+name: ci-dotfiles
+'on':
+  push:
+    tags:
+      - "*"
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  ci-dotfiles:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install deps, make & lint
+        env:
+          TERM: xterm
+        run: |
+          sudo apt update && sudo apt install -y bash git make shellcheck vim curl
+          make help
+        # shellcheck ~/.bashrc
+        # shellcheck ~/.bash_profile
+...
