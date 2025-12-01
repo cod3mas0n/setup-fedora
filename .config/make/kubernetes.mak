@@ -10,13 +10,13 @@ FREE_LENS_LATEST := https://api.github.com/repos/freelensapp/freelens/releases/l
 .PHONY: k8s-free-lens
 k8s-free-lens: ## Install FreeLens IDE
 	echo "## —— Installing Kubernetes FreeLens IDE -----------------------------------------------------------"
-	curl -fSL ${FREE_LENS_LATEST} \
+	curl -x "socks5://127.0.0.1:10808" -fSL ${FREE_LENS_LATEST} \
 	| grep "browser_download_url" \
 	| grep -E 'linux-amd64\.rpm"' \
 	| grep -v '\.sha256' \
 	| cut -d '"' -f 4 \
 	| head -n 1 \
-	| xargs sudo curl -fSL -o /tmp/freelens-linux-amd64.rpm
+	| xargs sudo curl -x "socks5://127.0.0.1:10808" -fSL -o /tmp/freelens-linux-amd64.rpm
 	sudo rpm --force -Uvh /tmp/freelens-linux-amd64.rpm
 
 

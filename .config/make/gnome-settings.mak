@@ -19,7 +19,7 @@ gnome-keyboard-shortcuts: ## Apply Gnome Custom Keyboard Shortcuts
 .PHONY: gnome-launchers-shortcuts
 gnome-launchers-shortcuts: ## Apply Gnome Custom Application Launchers Shortcuts
 	echo "## —— Gnome Launchers Shortcuts --------------------------------------------------------------------"
-	gsettings set org.gnome.settings-daemon.plugins.media-keys home '<Super>e'
+	gsettings set org.gnome.settings-daemon.plugins.media-keys home ['<Super>e']
 	gsettings set org.gnome.settings-daemon.plugins.media-keys email ['<Super>q']
 	gsettings set org.gnome.settings-daemon.plugins.media-keys www ['<Super>w']
 	gsettings set org.gnome.settings-daemon.plugins.media-keys search ['<Super>s']

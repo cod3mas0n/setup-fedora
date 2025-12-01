@@ -13,6 +13,7 @@ rpmfusion: ## Install rpmfusion repositories (https://rpmfusion.org/Configuratio
 .PHONY: install-packages
 install-packages: ## Install Essential Packages
 	echo "## —— Installing Essentials Packages ---------------------------------------------------------------"
+	sudo dnf update -y
 	sudo dnf install -y \
 		gimp gimp-data-extras\
 		htop remmina pwgen \
@@ -24,7 +25,8 @@ install-packages: ## Install Essential Packages
 		cronie libssh2 sshpass \
 		NetworkManager-libnm-devel \
 		okular libgtop2-devel \
-		ShellCheck
+		ShellCheck vim \
+		libgnome
 	pip3 install -U pre-commit
 
 

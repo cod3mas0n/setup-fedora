@@ -19,7 +19,7 @@ ansible: ## Install and Configure Ansible
 .PHONY: ansible-mitogen
 ansible-mitogen: ansible ## Install and Configure Ansible Mitogen
 	echo "## —— Installing and configuring Ansible Mitogen ---------------------------------------------------"
-	sudo curl -fSL ${MITOGEN_DOWNLOAD_URL} -o ${ANSIBLE_PLUINGS_DIR}/mitogen-${MITOGEN_VERSION}.tar.gz
+	sudo curl -x "socks5://127.0.0.1:10808" -fSL ${MITOGEN_DOWNLOAD_URL} -o ${ANSIBLE_PLUINGS_DIR}/mitogen-${MITOGEN_VERSION}.tar.gz
 	pushd ${ANSIBLE_PLUINGS_DIR} &> /dev/null && \
 		sudo tar xzf mitogen-${MITOGEN_VERSION}.tar.gz && \
 		popd &> /dev/null

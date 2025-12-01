@@ -15,5 +15,5 @@ ETC_CRONTAB_PATH := etc/crontab
 crontab: ## Install Cronie and Add Custom Crontab Template
 	echo "## —— Custom Crontab Template ----------------------------------------------------------------------"
 	sudo dnf install -y cronie
-	sudo mv ${ETC_CRONTAB_PATH} /opt/${ETC_CRONTAB_PATH}.bak &> /dev/null | true
+	sudo cp /${ETC_CRONTAB_PATH} /opt/crontab.bak &> /dev/null | true
 	sudo ln -sf ${PWD}/${ETC_CRONTAB_PATH} /${ETC_CRONTAB_PATH}

@@ -17,13 +17,13 @@ GOLANG_VERSION := go1.25.4.linux-amd64.tar.gz
 golang: ## Install Golang
 	echo "## —— Installing Golang ----------------------------------------------------------------------------"
 	sudo rm -rf /tmp/${GOLANG_VERSION}
-	sudo curl -fSL https://go.dev/dl/${GOLANG_VERSION} -o /tmp/${GOLANG_VERSION}
+	sudo curl -x "socks5://127.0.0.1:10808" -fSL https://go.dev/dl/${GOLANG_VERSION} -o /tmp/${GOLANG_VERSION}
 	sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf /tmp/${GOLANG_VERSION}
 
 POSTMAN_DESKTOP_ENTRY := usr/share/applications/postman.desktop
 .PHONY: postman
 postman: ## Install Postman
 	echo "## —— Installing Postman ---------------------------------------------------------------------------"
-	sudo curl -fSL https://dl.pstmn.io/download/latest/linux_64 -o /opt/postman-linux-x64.tar.gz
+	sudo curl -x "socks5://127.0.0.1:10808" -fSL https://dl.pstmn.io/download/latest/linux_64 -o /opt/postman-linux-x64.tar.gz
 	sudo tar -C /opt -xzf /opt/postman-linux-x64.tar.gz
 	sudo ln -sf ${PWD}/${POSTMAN_DESKTOP_ENTRY} /${POSTMAN_DESKTOP_ENTRY}

@@ -73,7 +73,6 @@ vpn-proxy: proxychains-ng sing-box \
 gnome-settings: install-pkgs fonts \
 	gnome-extras \
 	gnome-keyboard-shortcuts \
-	gnome-launchers-shortcuts \
 	gnome-interface-settings \
 	gnome-power-settings \
 	gnome-terminal

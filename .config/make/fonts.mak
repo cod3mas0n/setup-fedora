@@ -9,4 +9,4 @@ PERSIAN_FONTS_URL := https://raw.githubusercontent.com/fzerorubigd/persian-fonts
 .PHONY: persian-fonts
 persian-fonts: ## Install Persian Fonts
 	echo "## —— Installing Persian Fonts ---------------------------------------------------------------------"
-	bash -c "$$(curl -fsSL ${PERSIAN_FONTS_URL})"
+	bash -c "$$(curl -x "socks5://127.0.0.1:10808" -fsSL ${PERSIAN_FONTS_URL})"

@@ -12,7 +12,7 @@ set -o pipefail               # makes sure a pipeline fails if any command in th
 #   PROFILE_ID="b1dcc9dd-...-xxxx" ./scripts/configure-gnome-terminal.sh
 
 # Defaults (override via env)
-: "${FONT:="Fira Code 15"}"
+: "${FONT:="Fira Code 13"}"
 : "${BACKGROUND:="#171421"}"
 : "${FOREGROUND:="#D0CFCC"}" # Text Color
 : "${USE_SYSTEM_FONT:=false}" # true/false
@@ -21,7 +21,7 @@ set -o pipefail               # makes sure a pipeline fails if any command in th
 : "${VISIBLE_NAME:="Automated Profile"}"
 : "${AUDIBLE_BELL:=false}"
 : "${BOLD_IS_BRIGHT:=false}"
-: "${WINDOWS_COLUMNS_SIZE:=136}"
+: "${WINDOWS_COLUMNS_SIZE:=124}"
 : "${WINDOWS_ROWS_SIZE:=28}"
 
 # Check required commands exist
