@@ -55,3 +55,9 @@ gnome-power-settings: ## Apply Gnome Custom Power Settings
 gnome-terminal: ## Apply Gnome Terminal Custom Preferences
 	echo "## —— Running GNOME Terminal configuration ---------------------------------------------------------"
 	./scripts/configure-gnome-terminal.sh
+
+.PHONY: ptyxis-terminal
+ptyxis-terminal: ## Apply Ptyxis Terminal Custom Preferences
+	echo "## —— Running Ptyxis Terminal configuration ---------------------------------------------------------"
+	@sudo dnf install ptyxis -y
+	./scripts/configure-ptyxis-terminal.sh
