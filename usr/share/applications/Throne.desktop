@@ -2,13 +2,13 @@
 Version=1.0
 Type=Application
 
-Name=Nekoray
+Name=Throne
 GenericName=Proxy Manager
 Comment=Secure and simple proxy management client for Linux
 
-Exec=/opt/nekoray/launcher %U
-Icon=/opt/nekoray/nekobox.png
-StartupWMClass=Nekoray
+Exec=/opt/Throne/Throne %U
+Icon=/opt/Throne/Throne.png
+StartupWMClass=Throne
 Terminal=false
 
 Categories=Network;Security;

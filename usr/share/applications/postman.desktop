@@ -1,8 +1,15 @@
 [Desktop Entry]
 Version=1.0
 Type=Application
+
 Name=Postman
-Exec=/opt/Postman/Postman
+GenericName=API Client
+Comment=Collaboration platform for API development
+
+Exec=/opt/Postman/Postman %U
 Icon=/opt/Postman/app/resources/app/assets/icon.png
 Terminal=false
-Categories=Development;
+StartupWMClass=Postman
+
+Categories=Development;IDE;
+Keywords=api;rest;http;graphql;testing;

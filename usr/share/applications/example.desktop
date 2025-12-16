@@ -1,8 +1,15 @@
 [Desktop Entry]
 Version=1.0
 Type=Application
-Name=application name
-Exec=/path/to/application
+
+Name=
+GenericName=
+Comment=
+
+Exec=/path/to/application %U
 Icon=/path/to/application/icon.png
+StartupWMClass=
 Terminal=false
-Categories=Development;
+
+Categories=
+Keywords=

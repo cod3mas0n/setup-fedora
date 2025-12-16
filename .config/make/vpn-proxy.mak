@@ -27,6 +27,7 @@ NEKORAY_DESKTOP_ENTRY := usr/share/applications/nekoray.desktop
 .PHONY: nekoray-client
 nekoray-client: ## Install Nekoray (https://github.com/MatsuriDayo/nekoray)
 	echo "## —— Installing Nekoray From Source ---------------------------------------------------------------"
+	sudo rm -rf /tmp/nekoray &> /dev/null | true
 	sudo mkdir -p /tmp/nekoray
 	curl -x "socks5://127.0.0.1:10808" -fsSL ${NEKORAY_LATEST} \
 	| grep "browser_download_url" \
@@ -70,3 +71,29 @@ v2rayn-client: ## Install V2rayN (https://github.com/2dust/v2rayN)
 	| cut -d '"' -f 4 \
 	| xargs sudo curl -x "socks5://127.0.0.1:10808" -fSL -o /tmp/v2rayN-linux-rhel-64.rpm
 	sudo rpm -Uvh /tmp/v2rayN-linux-rhel-64.rpm
+
+THRONE_LATEST := https://api.github.com/repos/throneproj/Throne/releases/latest
+THRONE_DESKTOP_ENTRY := usr/share/applications/Throne.desktop
+
+.PHONY: throne
+throne: ## Install throne (https://throneproj.github.io/)
+	echo "## —— Installing Throne ----------------------------------------------------------------------------"
+	sudo rm -rf /tmp/throne &> /dev/null | true
+	sudo mkdir -p /tmp/throne
+	curl -x "socks5://127.0.0.1:10808" -fsSL ${THRONE_LATEST} \
+	| grep "browser_download_url" \
+	| grep -E "linux-amd64.zip" \
+	| cut -d '"' -f 4 \
+	| head -n 1 \
+	| tee /tmp/throne_url.txt && \
+	\
+	pushd /tmp/throne &> /dev/null && \
+	sudo curl -x "socks5://127.0.0.1:10808" -fSLO "$$(cat /tmp/throne_url.txt)" && \
+	\
+	zipfile="$$(basename $$(cat /tmp/throne_url.txt))" && \
+	sudo unzip -o "$$zipfile" && \
+	sudo rm -rf /opt/Throne &> /dev/null | true && \
+	sudo mv /tmp/throne/Throne /opt && \
+	popd &> /dev/null && \
+	sudo ln -fs ${PWD}/${THRONE_DESKTOP_ENTRY} /${THRONE_DESKTOP_ENTRY}
+	sudo chown ${USER}:${USER} /opt/Throne
