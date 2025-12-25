@@ -72,6 +72,7 @@ vpn-proxy: proxychains-ng sing-box \
 .PHONY: gnome-settings
 gnome-settings: install-pkgs fonts \
 	gnome-extras \
+	gnome-gtk4-settings \
 	gnome-keyboard-shortcuts \
 	gnome-launchers-shortcuts \
 	gnome-interface-settings \

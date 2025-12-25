@@ -8,6 +8,10 @@ gnome-extras: ## Remove Extra/useless Gnome Applications
 		gnome-contacts rhythmbox gnome-weather \
 		gnome-software
 
+.PHONY: gnome-gtk4-settings
+gnome-gtk4-settings: ## Apply Gnome GTK4 Settings
+	gsettings set org.gtk.gtk4.Settings.FileChooser sort-directories-first true
+
 .PHONY: gnome-keyboard-shortcuts
 gnome-keyboard-shortcuts: ## Apply Gnome Custom Keyboard Shortcuts
 	echo "## —— Gnome Keyboard Custom Shortcuts --------------------------------------------------------------"
