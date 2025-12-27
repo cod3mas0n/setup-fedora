@@ -26,7 +26,8 @@ install-packages: ## Install Essential Packages
 		NetworkManager-libnm-devel \
 		okular libgtop2-devel \
 		ShellCheck vim \
-		libgnome cloud-init
+		libgnome cloud-init \
+		pip3 watchdog
 	pip3 install -U pre-commit
 
 
