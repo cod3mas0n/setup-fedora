@@ -77,7 +77,8 @@ gnome-settings: install-pkgs fonts \
 	gnome-launchers-shortcuts \
 	gnome-interface-settings \
 	gnome-power-settings \
-	gnome-terminal
+	gnome-terminal \
+	ptyxis-terminal
 
 .PHONY: install-pkgs
 install-pkgs: rpmfusion \
