@@ -16,8 +16,9 @@ mimirtool: ## Install and Configure Mimirtool
 .PHONY: minio-mc
 minio-mc: ## Install and Configure MinIO Client (mc)
 	echo "## —— Installing and configuring MinIO Client ------------------------------------------------------"
-	curl -x "socks5://127.0.0.1:10808" -fSL https://dl.min.io/client/mc/release/linux-amd64/mc --create-dirs -o /tmp/minio-binaries/mc
-	sudo install -m 555 /tmp/minio-binaries/mc /usr/local/bin/mc
+	rm -rf ${HOME}/.minio-binaries/mc &> /dev/null | true
+	curl -x "socks5://127.0.0.1:10808" -fSL https://dl.min.io/client/mc/release/linux-amd64/mc --create-dirs -o ${HOME}/.minio-binaries/mc
+	chmod +x ${HOME}/.minio-binaries/mc
 
 # https://argo-cd.readthedocs.io/en/stable/cli_installation/#download-latest-stable-version
 ARGOCD_LATEST := https://raw.githubusercontent.com/argoproj/argo-cd/stable/VERSION
