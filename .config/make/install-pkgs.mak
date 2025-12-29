@@ -28,8 +28,7 @@ install-packages: ## Install Essential Packages
 		ShellCheck vim \
 		libgnome cloud-init \
 		pip3 watchdog
-	pip3 install -U pre-commit
-
+	pip3 install -U pre-commit passlib
 
 .PHONY: install-devel-tools
 install-devel-tools: ## Install Development tools Packages
