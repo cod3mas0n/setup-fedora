@@ -66,8 +66,7 @@ virtualization: qemu-kvm-virt
 
 .PHONY: vpn-proxy
 vpn-proxy: proxychains-ng sing-box \
-	nekoray-client hiddify-client \
-	v2rayn-client
+	nekoray-client v2rayn-client
 
 .PHONY: gnome-settings
 gnome-settings: install-pkgs fonts \

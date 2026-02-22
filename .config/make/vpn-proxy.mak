@@ -48,17 +48,18 @@ nekoray-client: ## Install Nekoray (https://github.com/MatsuriDayo/nekoray)
 	sudo ln -fs ${PWD}/${NEKORAY_DESKTOP_ENTRY} /${NEKORAY_DESKTOP_ENTRY}
 	sudo chown ${USER}:${USER} /opt/nekoray
 
-HIDDIFY_LATEST := https://api.github.com/repos/hiddify/hiddify-next/releases/latest
+# -- Deprecated
+# HIDDIFY_LATEST := https://api.github.com/repos/hiddify/hiddify-next/releases/latest
 
-.PHONY: hiddify-client
-hiddify-client: ## Install Hiddify (https://hiddify.com)
-	echo "## —— Installing Hiddify Client -------------------------------------------------------------------"
-	curl -x "socks5://127.0.0.1:10808" -fsSL ${HIDDIFY_LATEST} \
-	| grep "browser_download_url" \
-	| grep -E "Hiddify-rpm-x64.rpm" \
-	| cut -d '"' -f 4 \
-	| xargs sudo curl -x "socks5://127.0.0.1:10808" -fSL -o /tmp/Hiddify-rpm-x64.rpm
-	sudo rpm -Uvh /tmp/Hiddify-rpm-x64.rpm
+# .PHONY: hiddify-client
+# hiddify-client: ## Install Hiddify (https://hiddify.com)
+# 	echo "## —— Installing Hiddify Client -------------------------------------------------------------------"
+# 	curl -x "socks5://127.0.0.1:10808" -fsSL ${HIDDIFY_LATEST} \
+# 	| grep "browser_download_url" \
+# 	| grep -E "Hiddify-rpm-x64.rpm" \
+# 	| cut -d '"' -f 4 \
+# 	| xargs sudo curl -x "socks5://127.0.0.1:10808" -fSL -o /tmp/Hiddify-rpm-x64.rpm
+# 	sudo rpm -Uvh /tmp/Hiddify-rpm-x64.rpm
 
 V2RAYN_LATEST := https://api.github.com/repos/2dust/v2rayN/releases/latest
 
