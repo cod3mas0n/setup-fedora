@@ -76,6 +76,6 @@ install-gnome-utils: ## Install Gnome Utilities and Packages
 	sudo dnf install -y \
 		gnome-extensions-app gnome-extensions \
 		gnome-terminal gnome-terminal-nautilus \
-		gnome-themes-extra gnome-tweaks \
+		gnome-tweaks adw-gtk3-theme \
 		libayatana-appindicator3 libayatana-indicator-gtk3 \
-		gnome-system-monitor \
+		gnome-system-monitor
