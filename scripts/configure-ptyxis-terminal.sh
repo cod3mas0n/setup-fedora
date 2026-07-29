@@ -38,7 +38,8 @@ gsettings set org.gnome.Ptyxis default-rows 'uint32 24'
 gsettings set org.gnome.Ptyxis disable-padding false
 gsettings set org.gnome.Ptyxis enable-a11y true
 gsettings set org.gnome.Ptyxis font-name "${FONT}"
-gsettings set org.gnome.Ptyxis ignore-osc-title false
+# Ptyxis to ignore titles
+gsettings set org.gnome.Ptyxis ignore-osc-title true
 gsettings set org.gnome.Ptyxis interface-style 'dark'
 gsettings set org.gnome.Ptyxis new-tab-position 'last'
 gsettings set org.gnome.Ptyxis prompt-on-close true
