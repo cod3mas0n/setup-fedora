@@ -27,3 +27,7 @@ postman: ## Install Postman
 	sudo curl -x "socks5://127.0.0.1:10808" -fSL https://dl.pstmn.io/download/latest/linux_64 -o /opt/postman-linux-x64.tar.gz
 	sudo tar -C /opt -xzf /opt/postman-linux-x64.tar.gz
 	sudo ln -sf ${PWD}/${POSTMAN_DESKTOP_ENTRY} /${POSTMAN_DESKTOP_ENTRY}
+
+.PHONY: rustup
+rustup: ## An installer for the systems programming language Rust
+	curl -x "socks5://127.0.0.1:10808" --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh

@@ -59,7 +59,7 @@ kubernetes-tools: k8s-lens \
 	kubectl kubectx helm
 
 .PHONY: programming
-programming: vscode golang postman
+programming: vscode golang postman rustup
 
 .PHONY: virtualization
 virtualization: qemu-kvm-virt
