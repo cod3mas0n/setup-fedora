@@ -12,7 +12,7 @@ set -o pipefail               # makes sure a pipeline fails if any command in th
 #   PROFILE_PATH="/" ./scripts/configure-gnome-terminal.sh
 
 # Defaults (override via env)
-: "${FONT:="Fira Code 14"}"
+: "${FONT:="Cascadia Code 14"}"
 : "${USE_SYSTEM_FONT:=false}" # true/false
 : "${AUDIBLE_BELL:=false}"
 : "${PALETTE:='Brogrammer'}"
