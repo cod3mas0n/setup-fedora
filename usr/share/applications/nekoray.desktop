@@ -8,7 +8,7 @@ Comment=Secure and simple proxy management client for Linux
 
 Exec=/opt/nekoray/launcher %U
 Icon=/opt/nekoray/nekobox.png
-StartupWMClass=Nekoray
+StartupWMClass=nekobox
 Terminal=false
 
 Categories=Network;Security;
