@@ -4,7 +4,7 @@ all: vpn-proxy dnf-configs \
 	gnome-settings \
 	programming virtualization \
 	devops-tools kubernetes-tools \
-	extras crontab \
+	extras crontab grub2 \
 
 # Makefile global config
 # Use config.mak to override any of the following variables.
@@ -93,3 +93,6 @@ fonts: fira-code-fonts persian-fonts
 
 .PHONY: extras
 extras: yt-dlp crontab
+
+.PHONY: grub2
+grub2: grub2-efi
