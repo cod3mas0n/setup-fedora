@@ -27,7 +27,7 @@ install-packages: ## Install Essential Packages
 		okular libgtop2-devel \
 		ShellCheck vim \
 		libgnome cloud-init \
-		pip3 watchdog
+		pip3 watchdog jcal
 	pip3 install -U pre-commit passlib
 
 .PHONY: install-devel-tools
@@ -38,7 +38,8 @@ install-devel-tools: ## Install Development tools Packages
 		python3-devel ipython3 \
 		ruby-devel \
 		make cmake \
-		g++ gcc
+		g++ gcc \
+		readline-devel
 
 .PHONY: install-browsers
 install-browsers: ## Install Web Browsers
