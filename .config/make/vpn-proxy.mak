@@ -96,5 +96,5 @@ throne: ## Install throne (https://throneproj.github.io/)
 	sudo rm -rf /opt/Throne &> /dev/null | true && \
 	sudo mv /tmp/throne/Throne /opt && \
 	popd &> /dev/null && \
-	sudo ln -fs ${PWD}/${THRONE_DESKTOP_ENTRY} /${THRONE_DESKTOP_ENTRY}
 	sudo chown ${USER}:${USER} /opt/Throne
+# sudo ln -fs ${PWD}/${THRONE_DESKTOP_ENTRY} /${THRONE_DESKTOP_ENTRY}
