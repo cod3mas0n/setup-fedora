@@ -24,29 +24,30 @@ sing-box: ## Install sing-box (https://sing-box.sagernet.org/)
 NEKORAY_LATEST := https://api.github.com/repos/MatsuriDayo/nekoray/releases/latest
 NEKORAY_DESKTOP_ENTRY := usr/share/applications/nekoray.desktop
 
-.PHONY: nekoray-client
-nekoray-client: ## Install Nekoray (https://github.com/MatsuriDayo/nekoray)
-	echo "## —— Installing Nekoray From Source ---------------------------------------------------------------"
-	sudo rm -rf /tmp/nekoray &> /dev/null | true
-	sudo mkdir -p /tmp/nekoray
-	curl -x "socks5://127.0.0.1:10808" -fsSL ${NEKORAY_LATEST} \
-	| grep "browser_download_url" \
-	| grep -E "linux64.zip" \
-	| cut -d '"' -f 4 \
-	| head -n 1 \
-	| tee /tmp/nekoray_url.txt && \
-	\
-	pushd /tmp/nekoray &> /dev/null && \
-	sudo curl -x "socks5://127.0.0.1:10808" -fSLO "$$(cat /tmp/nekoray_url.txt)" && \
-	\
-	zipfile="$$(basename $$(cat /tmp/nekoray_url.txt))" && \
-	sudo unzip -o "$$zipfile" && \
-	sudo rm -rf /opt/nekoray &> /dev/null | true && \
-	sudo mv /tmp/nekoray/nekoray /opt/ && \
-	popd &> /dev/null && \
+# -- Deprecated
+# .PHONY: nekoray-client
+# nekoray-client: ## Install Nekoray (https://github.com/MatsuriDayo/nekoray)
+# 	echo "## —— Installing Nekoray From Source ---------------------------------------------------------------"
+# 	sudo rm -rf /tmp/nekoray &> /dev/null | true
+# 	sudo mkdir -p /tmp/nekoray
+# 	curl -x "socks5://127.0.0.1:10808" -fsSL ${NEKORAY_LATEST} \
+# 	| grep "browser_download_url" \
+# 	| grep -E "linux64.zip" \
+# 	| cut -d '"' -f 4 \
+# 	| head -n 1 \
+# 	| tee /tmp/nekoray_url.txt && \
+# 	\
+# 	pushd /tmp/nekoray &> /dev/null && \
+# 	sudo curl -x "socks5://127.0.0.1:10808" -fSLO "$$(cat /tmp/nekoray_url.txt)" && \
+# 	\
+# 	zipfile="$$(basename $$(cat /tmp/nekoray_url.txt))" && \
+# 	sudo unzip -o "$$zipfile" && \
+# 	sudo rm -rf /opt/nekoray &> /dev/null | true && \
+# 	sudo mv /tmp/nekoray/nekoray /opt/ && \
+# 	popd &> /dev/null && \
 
-	sudo ln -fs ${PWD}/${NEKORAY_DESKTOP_ENTRY} /${NEKORAY_DESKTOP_ENTRY}
-	sudo chown ${USER}:${USER} /opt/nekoray
+# 	sudo ln -fs ${PWD}/${NEKORAY_DESKTOP_ENTRY} /${NEKORAY_DESKTOP_ENTRY}
+# 	sudo chown ${USER}:${USER} /opt/nekoray
 
 # -- Deprecated
 # HIDDIFY_LATEST := https://api.github.com/repos/hiddify/hiddify-next/releases/latest
@@ -97,4 +98,4 @@ throne: ## Install throne (https://throneproj.github.io/)
 	sudo mv /tmp/throne/Throne /opt && \
 	popd &> /dev/null && \
 	sudo chown ${USER}:${USER} /opt/Throne
-# sudo ln -fs ${PWD}/${THRONE_DESKTOP_ENTRY} /${THRONE_DESKTOP_ENTRY}
+	sudo ln -fs ${PWD}/${THRONE_DESKTOP_ENTRY} /${THRONE_DESKTOP_ENTRY}

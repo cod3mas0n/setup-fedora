@@ -65,8 +65,7 @@ programming: vscode golang postman rustup
 virtualization: qemu-kvm-virt
 
 .PHONY: vpn-proxy
-vpn-proxy: proxychains-ng sing-box \
-	nekoray-client v2rayn-client
+vpn-proxy: proxychains-ng sing-box v2rayn-client throne
 
 .PHONY: gnome-settings
 gnome-settings: install-pkgs fonts \
