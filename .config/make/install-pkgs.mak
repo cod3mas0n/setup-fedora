@@ -27,7 +27,8 @@ install-packages: ## Install Essential Packages
 		okular libgtop2-devel \
 		ShellCheck vim \
 		libgnome cloud-init \
-		pip3 watchdog jcal
+		pip3 watchdog jcal \
+		asciinema
 	pip3 install -U pre-commit passlib
 
 .PHONY: install-devel-tools
