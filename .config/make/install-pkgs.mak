@@ -17,8 +17,7 @@ install-packages: ## Install Essential Packages
 	sudo dnf install -y \
 		gimp gimp-data-extras\
 		htop remmina pwgen \
-		unrar keepassxc \
-		libreoffice tldr \
+		libreoffice tldr untar \
 		most jq yq cowsay bat \
 		gnupg2 curl wget tar \
 		bat fzf alien rpm-build \
@@ -28,8 +27,9 @@ install-packages: ## Install Essential Packages
 		ShellCheck vim \
 		libgnome cloud-init \
 		pip3 watchdog jcal \
-		asciinema
+		asciinema flatpak
 	pip3 install -U pre-commit passlib
+	flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
 .PHONY: install-devel-tools
 install-devel-tools: ## Install Development tools Packages
@@ -81,3 +81,8 @@ install-gnome-utils: ## Install Gnome Utilities and Packages
 		gnome-tweaks adw-gtk3-theme \
 		libayatana-appindicator3 libayatana-indicator-gtk3 \
 		gnome-system-monitor
+
+.PHONY: install-kepassxc
+install-kepassxc: ## Install Keepassxc from flathub
+	echo "## —— install keepassxc ----------------------------------------------------------------------------"
+	flatpak install flathub org.keepassxc.KeePassXC

@@ -82,7 +82,8 @@ gnome-settings: install-pkgs fonts \
 install-pkgs: rpmfusion \
 	install-packages install-devel-tools \
 	install-browsers install-social-clients \
-	install-multimedia install-gnome-utils
+	install-multimedia install-gnome-utils \
+	install-kepassxc
 
 .PHONY: dnf-configs
 dnf-configs: vpn-proxy dnf5-conf
