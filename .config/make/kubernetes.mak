@@ -20,9 +20,13 @@ k8s-free-lens: ## Install FreeLens IDE
 	sudo rpm --force -Uvh /tmp/freelens-linux-amd64.rpm
 
 
+.PHONY: update-k8s-repo
+update-k8s-repo: ## Update kubernetes.repo to the latest stable minor version
+	./scripts/update-kubernetes-repo.sh
+
 KUBERNETES_REPO_PATH := etc/yum.repos.d/kubernetes.repo
 .PHONY: kubectl
-kubectl: ## Install Kubectl CLI
+kubectl: update-k8s-repo ## Install Kubectl CLI
 	echo "## —— Installing Kubectl ---------------------------------------------------------------------------"
 	sudo ln -fs ${PWD}/${KUBERNETES_REPO_PATH} /${KUBERNETES_REPO_PATH}
 	sudo dnf install -y kubectl
