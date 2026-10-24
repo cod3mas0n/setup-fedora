@@ -17,7 +17,7 @@ install-packages: ## Install Essential Packages
 	sudo dnf install -y \
 		gimp gimp-data-extras\
 		htop remmina pwgen \
-		libreoffice tldr untar \
+		libreoffice tldr \
 		most jq yq cowsay bat \
 		gnupg2 curl wget tar \
 		bat fzf alien rpm-build \

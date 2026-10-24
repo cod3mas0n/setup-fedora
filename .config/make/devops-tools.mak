@@ -13,11 +13,12 @@ mimirtool: ## Install and Configure Mimirtool
 	sudo curl -x "socks5://127.0.0.1:10808" -fSLo /tmp/mimirtool https://github.com/grafana/mimir/releases/latest/download/mimirtool-linux-amd64
 	sudo install -m 555 /tmp/mimirtool /usr/local/bin/mimirtool
 
+MC_URL := https://github.com/minio/mc/releases/download/RELEASE.2025-08-13T08-35-41Z/mc.linux-amd64.RELEASE.2025-08-13T08-35-41Z
 .PHONY: minio-mc
 minio-mc: ## Install and Configure MinIO Client (mc)
 	echo "## —— Installing and configuring MinIO Client ------------------------------------------------------"
 	rm -rf ${HOME}/.minio-binaries/mc &> /dev/null | true
-	curl -x "socks5://127.0.0.1:10808" -fSL https://dl.min.io/client/mc/release/linux-amd64/mc --create-dirs -o ${HOME}/.minio-binaries/mc
+	curl -x "socks5://127.0.0.1:10808" -fSL "${MC_URL}" --create-dirs -o ${HOME}/.minio-binaries/mc
 	chmod +x ${HOME}/.minio-binaries/mc
 
 # https://argo-cd.readthedocs.io/en/stable/cli_installation/#download-latest-stable-version
