@@ -66,3 +66,8 @@ ptyxis-terminal: ## Apply Ptyxis Terminal Custom Preferences
 	echo "## —— Running Ptyxis Terminal configuration ---------------------------------------------------------"
 	@sudo dnf install ptyxis -y
 	./scripts/configure-ptyxis-terminal.sh
+
+.PHONY: gnome-extensions
+gnome-extensions: ## Install Gnome Extensions
+	echo "## —— Installing Gnome Extensions -------------------------------------------------------------------"
+	gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com

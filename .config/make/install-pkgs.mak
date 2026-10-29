@@ -80,7 +80,8 @@ install-gnome-utils: ## Install Gnome Utilities and Packages
 		gnome-terminal gnome-terminal-nautilus \
 		gnome-tweaks adw-gtk3-theme \
 		libayatana-appindicator3 libayatana-indicator-gtk3 \
-		gnome-system-monitor
+		gnome-system-monitor \
+		gnome-shell-extension-appindicator
 
 .PHONY: install-kepassxc
 install-kepassxc: ## Install Keepassxc from flathub
