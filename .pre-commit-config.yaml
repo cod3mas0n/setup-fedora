@@ -22,7 +22,7 @@ repos:
         files: "\\.sh$"
 
   - repo: https://github.com/adrienverge/yamllint
-    rev: v1.37.1
+    rev: v1.38.0
     hooks:
       - id: yamllint
         args: ["-c", ".yamllint"]
@@ -34,8 +34,13 @@ repos:
 
 # Security
 
-  - repo: https://github.com/trufflesecurity/trufflehog
-    rev: v3.91.1
+  - repo: local
     hooks:
-      - id: trufflehog
+      - id: trufflehog-full-scan
+        name: TruffleHog - Full Repository Secret Scan
+        entry: trufflehog filesystem . --config=trufflehog-config.yaml --exclude-paths=trufflehog-excludes.txt --results=verified,unverified,unknown --fail
+        language: system
+        pass_filenames: false
+        always_run: true
+        verbose: true
 ...
