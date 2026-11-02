@@ -31,3 +31,7 @@ postman: ## Install Postman
 .PHONY: rustup
 rustup: ## An installer for the systems programming language Rust
 	curl -x "socks5://127.0.0.1:10808" --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+.PHONY: trufflehog
+trufflehog: ## TruffleHog is a tool for searching through git repositories for secrets
+	curl -x "socks5://127.0.0.1:10808" -sSfL https://raw.githubusercontent.com/trufflesecurity/trufflehog/main/scripts/install.sh | sh -s -- -b ~/.local/bin
