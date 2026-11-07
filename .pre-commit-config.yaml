@@ -38,7 +38,7 @@ repos:
     hooks:
       - id: trufflehog-full-scan
         name: TruffleHog - Full Repository Secret Scan
-        entry: trufflehog filesystem . --config=trufflehog-config.yaml --exclude-paths=trufflehog-excludes.txt --results=verified,unverified,unknown --fail
+        entry: trufflehog filesystem . --config=.trufflehog.yaml --exclude-paths=.trufflehog-exclude --results=verified,unverified,unknown --fail
         language: system
         pass_filenames: false
         always_run: true
