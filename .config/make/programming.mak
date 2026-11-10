@@ -24,9 +24,10 @@ POSTMAN_DESKTOP_ENTRY := usr/share/applications/postman.desktop
 .PHONY: postman
 postman: ## Install Postman
 	echo "## —— Installing Postman ---------------------------------------------------------------------------"
-	sudo curl -x "socks5://127.0.0.1:10808" -fSL https://dl.pstmn.io/download/latest/linux_64 -o /opt/postman-linux-x64.tar.gz
-	sudo tar -C /opt -xzf /opt/postman-linux-x64.tar.gz
-	sudo ln -sf ${PWD}/${POSTMAN_DESKTOP_ENTRY} /${POSTMAN_DESKTOP_ENTRY}
+	flatpak install flathub com.getpostman.Postman
+# 	sudo curl -x "socks5://127.0.0.1:10808" -fSL https://dl.pstmn.io/download/latest/linux_64 -o /opt/postman-linux-x64.tar.gz
+# 	sudo tar -C /opt -xzf /opt/postman-linux-x64.tar.gz
+# 	sudo ln -sf ${PWD}/${POSTMAN_DESKTOP_ENTRY} /${POSTMAN_DESKTOP_ENTRY}
 
 .PHONY: rustup
 rustup: ## An installer for the systems programming language Rust
