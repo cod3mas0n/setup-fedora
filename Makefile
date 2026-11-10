@@ -1,99 +1,45 @@
-.PHONY: all SHELL
-all: vpn-proxy dnf-configs \
-	fonts install-pkgs \
-	gnome-settings \
-	programming virtualization \
-	devops-tools kubernetes-tools \
-	extras crontab grub2 \
-
-# Makefile global config
-# Use config.mak to override any of the following variables.
-# Do not make changes here.
-
 .DEFAULT_GOAL := help
-.EXPORT_ALL_VARIABLES:
 .ONESHELL:
 .SILENT:
-MAKEFLAGS += "-j$(NUM_CORES) -l$(NUM_CORES)"
-MAKEFLAGS += --silent
-SHELL:= /bin/bash
-.SHELLFLAGS = -eu -o pipefail -c
+SHELL := /bin/bash
+.SHELLFLAGS := -eu -o pipefail -c
 
-# Makefile colors config
-bold := $(shell tput bold)
-normal := $(shell tput sgr0)
-errorTitle := $(shell tput setab 1 && tput bold && echo '\n')
-recommendation := $(shell tput setab 4)
-underline := $(shell tput smul)
-reset := $(shell tput -Txterm sgr0)
-black := $(shell tput setaf 0)
-red := $(shell tput setaf 1)
-green := $(shell tput setaf 2)
-yellow := $(shell tput setaf 3)
-blue := $(shell tput setaf 4)
-magenta := $(shell tput setaf 5)
-cyan := $(shell tput setaf 6)
-white := $(shell tput setaf 7)
+# Installation targets modify the system and should run sequentially by default.
+# Avoid setting -j here; callers can choose their own make options.
+include $(sort $(wildcard .config/make/*.mak))
 
-define HEADER
-How to use me:
-	# To install and configure all targets
-	${bold}make all${reset}
+## —— Main targets ---------------------------------------------------------------------------------
 
-	# To install and configure one target
-	${bold}make ${cyan}<target>${reset}
+.PHONY: all devops-tools kubernetes-tools programming virtualization vpn-proxy \
+	gnome-settings install-pkgs dnf-configs fonts extras grub2
 
-endef
-export HEADER
+all: ## Install and configure everything
+all: vpn-proxy dnf-configs fonts install-pkgs gnome-settings \
+	programming virtualization devops-tools kubernetes-tools extras crontab grub2
 
--include $(addsuffix /*.mak, $(shell find .config/make -type d))
+devops-tools: ansible ansible-mitogen terraform mimirtool minio-mc argocd ## Install DevOps tools
 
-.PHONY: devops-tools
-devops-tools: ansible ansible-mitogen \
-	terraform mimirtool \
-	minio-mc argocd
+kubernetes-tools: k8s-lens k8s-free-lens kubectl kubectx helm ## Install Kubernetes tools
 
-.PHONY: kubernetes-tools
-kubernetes-tools: k8s-lens \
-	k8s-free-lens \
-	kubectl kubectx helm
+programming: vscode golang postman rustup trufflehog ## Install programming tools
 
-.PHONY: programming
-programming: vscode golang postman rustup trufflehog
+virtualization: qemu-kvm-virt ## Install virtualization tools
 
-.PHONY: virtualization
-virtualization: qemu-kvm-virt
+vpn-proxy: proxychains-ng sing-box v2rayn-client throne ## Install VPN and proxy tools
 
-.PHONY: vpn-proxy
-vpn-proxy: proxychains-ng sing-box v2rayn-client throne
+gnome-settings: ## Configure GNOME
+gnome-settings: install-pkgs fonts gnome-extras gnome-gtk4-settings \
+	gnome-keyboard-shortcuts gnome-launchers-shortcuts gnome-interface-settings \
+	gnome-power-settings gnome-terminal ptyxis-terminal gnome-extensions
 
-.PHONY: gnome-settings
-gnome-settings: install-pkgs fonts \
-	gnome-extras \
-	gnome-gtk4-settings \
-	gnome-keyboard-shortcuts \
-	gnome-launchers-shortcuts \
-	gnome-interface-settings \
-	gnome-power-settings \
-	gnome-terminal \
-	ptyxis-terminal \
-	gnome-extensions
+install-pkgs: ## Install packages
+install-pkgs: rpmfusion install-packages install-devel-tools install-browsers \
+	install-social-clients install-multimedia install-gnome-utils install-kepassxc
 
-.PHONY: install-pkgs
-install-pkgs: rpmfusion \
-	install-packages install-devel-tools \
-	install-browsers install-social-clients \
-	install-multimedia install-gnome-utils \
-	install-kepassxc
+dnf-configs: vpn-proxy dnf5-conf ## Configure DNF
 
-.PHONY: dnf-configs
-dnf-configs: vpn-proxy dnf5-conf
+fonts: fira-code-fonts persian-fonts ## Install fonts
 
-.PHONY: fonts
-fonts: fira-code-fonts persian-fonts
+extras: yt-dlp crontab ## Install extras
 
-.PHONY: extras
-extras: yt-dlp crontab
-
-.PHONY: grub2
-grub2: grub2-efi
+grub2: grub2-efi ## Configure GRUB

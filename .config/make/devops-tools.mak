@@ -27,6 +27,7 @@ ARGOCD_LATEST := https://raw.githubusercontent.com/argoproj/argo-cd/stable/VERSI
 argocd: ## Install and Configure ArgoCD CLI
 	echo "## —— Installing and configuring ArgoCD CLI --------------------------------------------------------"
 	echo "Fetching latest Argo CD version..."
-	$(eval ARGOCD_VERSION := $(shell curl -fsSL "${ARGOCD_LATEST}"))
-	curl -x "socks5://127.0.0.1:10808" -fSL -o "/tmp/argocd-linux-amd64-v${ARGOCD_VERSION}" https://github.com/argoproj/argo-cd/releases/download/v${ARGOCD_VERSION}/argocd-linux-amd64
-	sudo install -m 555 "/tmp/argocd-linux-amd64-v${ARGOCD_VERSION}" /usr/local/bin/argocd
+	argocd_version="$$(curl -fsSL "${ARGOCD_LATEST}")"
+	echo "ArgoCD Version IS: $$argocd_version"
+	curl -x "socks5://127.0.0.1:10808" -fSL -o "/tmp/argocd-linux-amd64-v$$argocd_version" "https://github.com/argoproj/argo-cd/releases/download/v$$argocd_version/argocd-linux-amd64"
+	sudo install -m 555 "/tmp/argocd-linux-amd64-v$$argocd_version" /usr/local/bin/argocd
