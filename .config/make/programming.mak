@@ -17,7 +17,7 @@ GOLANG_VERSION := go1.25.4.linux-amd64.tar.gz
 golang: ## Install Golang
 	echo "## —— Installing Golang ----------------------------------------------------------------------------"
 	sudo rm -rf /tmp/${GOLANG_VERSION}
-	sudo curl -x "socks5://127.0.0.1:10808" -fSL https://go.dev/dl/${GOLANG_VERSION} -o /tmp/${GOLANG_VERSION}
+	sudo curl -x "$(SOCKS5_PROXY_URL)" -fSL https://go.dev/dl/${GOLANG_VERSION} -o /tmp/${GOLANG_VERSION}
 	sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf /tmp/${GOLANG_VERSION}
 
 POSTMAN_DESKTOP_ENTRY := usr/share/applications/postman.desktop
@@ -25,14 +25,15 @@ POSTMAN_DESKTOP_ENTRY := usr/share/applications/postman.desktop
 postman: ## Install Postman
 	echo "## —— Installing Postman ---------------------------------------------------------------------------"
 	flatpak install flathub com.getpostman.Postman
-# 	sudo curl -x "socks5://127.0.0.1:10808" -fSL https://dl.pstmn.io/download/latest/linux_64 -o /opt/postman-linux-x64.tar.gz
+# 	sudo curl -x "$(SOCKS5_PROXY_URL)" -fSL https://dl.pstmn.io/download/latest/linux_64 -o /opt/postman-linux-x64.tar.gz
 # 	sudo tar -C /opt -xzf /opt/postman-linux-x64.tar.gz
 # 	sudo ln -sf ${PWD}/${POSTMAN_DESKTOP_ENTRY} /${POSTMAN_DESKTOP_ENTRY}
 
 .PHONY: rustup
 rustup: ## An installer for the systems programming language Rust
-	curl -x "socks5://127.0.0.1:10808" --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+	curl -x "$(SOCKS5_PROXY_URL)" --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+	cargo install cargo-binstall --locked
 
 .PHONY: trufflehog
 trufflehog: ## TruffleHog is a tool for searching through git repositories for secrets
-	curl -x "socks5://127.0.0.1:10808" -sSfL https://raw.githubusercontent.com/trufflesecurity/trufflehog/main/scripts/install.sh | sh -s -- -b ~/.local/bin
+	curl -x "$(SOCKS5_PROXY_URL)" -sSfL https://raw.githubusercontent.com/trufflesecurity/trufflehog/main/scripts/install.sh | sh -s -- -b ~/.local/bin

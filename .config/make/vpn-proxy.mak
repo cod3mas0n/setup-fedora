@@ -30,7 +30,7 @@ NEKORAY_DESKTOP_ENTRY := usr/share/applications/nekoray.desktop
 # 	echo "## —— Installing Nekoray From Source ---------------------------------------------------------------"
 # 	sudo rm -rf /tmp/nekoray &> /dev/null | true
 # 	sudo mkdir -p /tmp/nekoray
-# 	curl -x "socks5://127.0.0.1:10808" -fsSL ${NEKORAY_LATEST} \
+# 	curl -x "$(SOCKS5_PROXY_URL)" -fsSL ${NEKORAY_LATEST} \
 # 	| grep "browser_download_url" \
 # 	| grep -E "linux64.zip" \
 # 	| cut -d '"' -f 4 \
@@ -38,7 +38,7 @@ NEKORAY_DESKTOP_ENTRY := usr/share/applications/nekoray.desktop
 # 	| tee /tmp/nekoray_url.txt && \
 # 	\
 # 	pushd /tmp/nekoray &> /dev/null && \
-# 	sudo curl -x "socks5://127.0.0.1:10808" -fSLO "$$(cat /tmp/nekoray_url.txt)" && \
+# 	sudo curl -x "$(SOCKS5_PROXY_URL)" -fSLO "$$(cat /tmp/nekoray_url.txt)" && \
 # 	\
 # 	zipfile="$$(basename $$(cat /tmp/nekoray_url.txt))" && \
 # 	sudo unzip -o "$$zipfile" && \
@@ -55,11 +55,11 @@ NEKORAY_DESKTOP_ENTRY := usr/share/applications/nekoray.desktop
 # .PHONY: hiddify-client
 # hiddify-client: ## Install Hiddify (https://hiddify.com)
 # 	echo "## —— Installing Hiddify Client -------------------------------------------------------------------"
-# 	curl -x "socks5://127.0.0.1:10808" -fsSL ${HIDDIFY_LATEST} \
+# 	curl -x "$(SOCKS5_PROXY_URL)" -fsSL ${HIDDIFY_LATEST} \
 # 	| grep "browser_download_url" \
 # 	| grep -E "Hiddify-rpm-x64.rpm" \
 # 	| cut -d '"' -f 4 \
-# 	| xargs sudo curl -x "socks5://127.0.0.1:10808" -fSL -o /tmp/Hiddify-rpm-x64.rpm
+# 	| xargs sudo curl -x "$(SOCKS5_PROXY_URL)" -fSL -o /tmp/Hiddify-rpm-x64.rpm
 # 	sudo rpm -Uvh /tmp/Hiddify-rpm-x64.rpm
 
 V2RAYN_LATEST := https://api.github.com/repos/2dust/v2rayN/releases/latest
@@ -67,11 +67,11 @@ V2RAYN_LATEST := https://api.github.com/repos/2dust/v2rayN/releases/latest
 .PHONY: v2rayn-client
 v2rayn-client: ## Install V2rayN (https://github.com/2dust/v2rayN)
 	echo "## —— Installing V2rayN Client --------------------------------------------------------------------"
-	curl -x "socks5://127.0.0.1:10808" -fsSL ${V2RAYN_LATEST} \
+	curl -x "$(SOCKS5_PROXY_URL)" -fsSL ${V2RAYN_LATEST} \
 	| grep "browser_download_url" \
 	| grep -E "v2rayN-linux-rhel-64.rpm" \
 	| cut -d '"' -f 4 \
-	| xargs sudo curl -x "socks5://127.0.0.1:10808" -fSL -o /tmp/v2rayN-linux-rhel-64.rpm
+	| xargs sudo curl -x "$(SOCKS5_PROXY_URL)" -fSL -o /tmp/v2rayN-linux-rhel-64.rpm
 	sudo rpm -Uvh /tmp/v2rayN-linux-rhel-64.rpm
 
 THRONE_LATEST := https://api.github.com/repos/throneproj/Throne/releases/latest
@@ -82,7 +82,7 @@ throne: ## Install throne (https://throneproj.github.io/)
 	echo "## —— Installing Throne ----------------------------------------------------------------------------"
 	sudo rm -rf /tmp/throne &> /dev/null | true
 	sudo mkdir -p /tmp/throne
-	curl -x "socks5://127.0.0.1:10808" -fsSL ${THRONE_LATEST} \
+	curl -x "$(SOCKS5_PROXY_URL)" -fsSL ${THRONE_LATEST} \
 	| grep "browser_download_url" \
 	| grep -E "linux-amd64.zip" \
 	| cut -d '"' -f 4 \
@@ -90,7 +90,7 @@ throne: ## Install throne (https://throneproj.github.io/)
 	| tee /tmp/throne_url.txt && \
 	\
 	pushd /tmp/throne &> /dev/null && \
-	sudo curl -x "socks5://127.0.0.1:10808" -fSLO "$$(cat /tmp/throne_url.txt)" && \
+	sudo curl -x "$(SOCKS5_PROXY_URL)" -fSLO "$$(cat /tmp/throne_url.txt)" && \
 	\
 	zipfile="$$(basename $$(cat /tmp/throne_url.txt))" && \
 	sudo unzip -o "$$zipfile" && \

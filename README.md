@@ -33,6 +33,15 @@ cd setup-fedora
 make all
 ```
 
+Proxy environment variables are disabled by default. Enable them for a make
+invocation when needed. The default endpoint is `127.0.0.1:10808`:
+
+```bash
+make USE_PROXY=1 PROXY_HOST=192.168.1.10 PROXY_PORT=1080 programming
+```
+
+`HTTP_PROXY_URL` and `SOCKS5_PROXY_URL` can also be overridden directly.
+
 ## Resources
 
 - [dnf configurations](https://dnf.readthedocs.io/en/latest/conf_ref.html)

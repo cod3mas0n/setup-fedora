@@ -4,6 +4,20 @@
 SHELL := /bin/bash
 .SHELLFLAGS := -eu -o pipefail -c
 
+# Proxy settings are available to recipes without being enabled globally.
+# Use `make USE_PROXY=1 ...` when a command needs the proxy environment.
+PROXY_HOST ?= 127.0.0.1
+PROXY_PORT ?= 10808
+HTTP_PROXY_URL ?= http://$(PROXY_HOST):$(PROXY_PORT)
+SOCKS5_PROXY_URL ?= socks5h://$(PROXY_HOST):$(PROXY_PORT)
+USE_PROXY ?= 0
+ifeq ($(USE_PROXY),1)
+export http_proxy := $(HTTP_PROXY_URL)
+export https_proxy := $(HTTP_PROXY_URL)
+export HTTP_PROXY := $(HTTP_PROXY_URL)
+export HTTPS_PROXY := $(HTTP_PROXY_URL)
+endif
+
 # Installation targets modify the system and should run sequentially by default.
 # Avoid setting -j here; callers can choose their own make options.
 include $(sort $(wildcard .config/make/*.mak))

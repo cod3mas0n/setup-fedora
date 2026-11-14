@@ -10,7 +10,7 @@ terraform: ## Install and Configure Terraform
 .PHONY: mimirtool
 mimirtool: ## Install and Configure Mimirtool
 	echo "## —— Installing and configuring Mimirtool ---------------------------------------------------------"
-	sudo curl -x "socks5://127.0.0.1:10808" -fSLo /tmp/mimirtool https://github.com/grafana/mimir/releases/latest/download/mimirtool-linux-amd64
+	sudo curl -x "$(SOCKS5_PROXY_URL)" -fSLo /tmp/mimirtool https://github.com/grafana/mimir/releases/latest/download/mimirtool-linux-amd64
 	sudo install -m 555 /tmp/mimirtool /usr/local/bin/mimirtool
 
 MC_URL := https://github.com/minio/mc/releases/download/RELEASE.2025-08-13T08-35-41Z/mc.linux-amd64.RELEASE.2025-08-13T08-35-41Z
@@ -18,7 +18,7 @@ MC_URL := https://github.com/minio/mc/releases/download/RELEASE.2025-08-13T08-35
 minio-mc: ## Install and Configure MinIO Client (mc)
 	echo "## —— Installing and configuring MinIO Client ------------------------------------------------------"
 	rm -rf ${HOME}/.minio-binaries/mc &> /dev/null | true
-	curl -x "socks5://127.0.0.1:10808" -fSL "${MC_URL}" --create-dirs -o ${HOME}/.minio-binaries/mc
+	curl -x "$(SOCKS5_PROXY_URL)" -fSL "${MC_URL}" --create-dirs -o ${HOME}/.minio-binaries/mc
 	chmod +x ${HOME}/.minio-binaries/mc
 
 # https://argo-cd.readthedocs.io/en/stable/cli_installation/#download-latest-stable-version
@@ -29,5 +29,5 @@ argocd: ## Install and Configure ArgoCD CLI
 	echo "Fetching latest Argo CD version..."
 	argocd_version="$$(curl -fsSL "${ARGOCD_LATEST}")"
 	echo "ArgoCD Version IS: $$argocd_version"
-	curl -x "socks5://127.0.0.1:10808" -fSL -o "/tmp/argocd-linux-amd64-v$$argocd_version" "https://github.com/argoproj/argo-cd/releases/download/v$$argocd_version/argocd-linux-amd64"
+	curl -x "$(SOCKS5_PROXY_URL)" -fSL -o "/tmp/argocd-linux-amd64-v$$argocd_version" "https://github.com/argoproj/argo-cd/releases/download/v$$argocd_version/argocd-linux-amd64"
 	sudo install -m 555 "/tmp/argocd-linux-amd64-v$$argocd_version" /usr/local/bin/argocd
