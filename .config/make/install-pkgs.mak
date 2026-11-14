@@ -15,7 +15,7 @@ install-packages: ## Install Essential Packages
 	echo "## —— Installing Essentials Packages ---------------------------------------------------------------"
 	sudo dnf update -y
 	sudo dnf install -y \
-		gimp gimp-data-extras\
+		gimp gimp-data-extras \
 		htop remmina pwgen \
 		libreoffice tldr \
 		most jq yq cowsay bat \
@@ -24,10 +24,13 @@ install-packages: ## Install Essential Packages
 		cronie libssh2 sshpass \
 		NetworkManager-libnm-devel \
 		okular libgtop2-devel \
-		ShellCheck vim \
+		ShellCheck unzip \
 		libgnome cloud-init \
 		pip3 watchdog jcal \
-		asciinema flatpak
+		asciinema flatpak \
+		ripgrep fd-find tree-sitter-cli \
+		vim vim-nerdtree neovim \
+		python3-pip python3-virtualenv
 	pip3 install -U pre-commit passlib
 	flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
