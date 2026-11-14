@@ -34,7 +34,7 @@ gnome-interface-settings: ## Apply Gnome Custom Interface Settings
 	echo "## —— Gnome Interface settings ---------------------------------------------------------------------"
 	gsettings set org.gnome.desktop.wm.preferences button-layout 'close,maximize,minimize:appmenu'
 
-	gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
+	gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3-dark'
 	gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 	gsettings set org.gnome.desktop.interface gtk-enable-primary-paste true
 
