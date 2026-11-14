@@ -44,7 +44,7 @@ vpn-proxy: proxychains-ng sing-box v2rayn-client throne ## Install VPN and proxy
 gnome-settings: ## Configure GNOME
 gnome-settings: install-pkgs fonts gnome-extras gnome-gtk4-settings \
 	gnome-keyboard-shortcuts gnome-launchers-shortcuts gnome-interface-settings \
-	gnome-power-settings gnome-terminal ptyxis-terminal gnome-extensions
+	gnome-power-settings gnome-terminal ptyxis-terminal gnome-better-tray
 
 install-pkgs: ## Install packages
 install-pkgs: rpmfusion install-packages install-devel-tools install-browsers \

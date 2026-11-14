@@ -15,22 +15,12 @@ install-packages: ## Install Essential Packages
 	echo "## —— Installing Essentials Packages ---------------------------------------------------------------"
 	sudo dnf update -y
 	sudo dnf install -y \
-		gimp gimp-data-extras \
-		htop remmina pwgen \
-		libreoffice tldr \
-		most jq yq cowsay bat \
-		gnupg2 curl wget tar \
-		bat fzf alien rpm-build \
-		cronie libssh2 sshpass \
-		NetworkManager-libnm-devel \
-		okular libgtop2-devel \
-		ShellCheck unzip \
-		libgnome cloud-init \
-		pip3 watchdog jcal \
-		asciinema flatpak \
-		ripgrep fd-find tree-sitter-cli \
-		vim vim-nerdtree neovim \
-		python3-pip python3-virtualenv
+		gimp gimp-data-extras htop remmina pwgen libreoffice tldr \
+		most jq yq cowsay gnupg2 curl wget tar bat fzf alien rpm-build \
+		cronie libssh2 sshpass NetworkManager-libnm-devel okular libgtop2-devel \
+		ShellCheck unzip libgnome cloud-init pip3 watchdog jcal \
+		asciinema flatpak ripgrep fd-find tree-sitter-cli \
+		vim vim-nerdtree neovim python3-pip python3-virtualenv
 	pip3 install -U pre-commit passlib
 	flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
@@ -59,8 +49,7 @@ install-social-clients: ## Install Social Clients
 	echo "## —— installing Social Clients --------------------------------------------------------------------"
 	sudo dnf install -y \
 		telegram-desktop \
-		thunderbird \
-		discord
+		thunderbird
 
 .PHONY: install-multimedia
 install-multimedia: ## Install Browsers
@@ -83,8 +72,7 @@ install-gnome-utils: ## Install Gnome Utilities and Packages
 		gnome-terminal gnome-terminal-nautilus \
 		gnome-tweaks adw-gtk3-theme \
 		libayatana-appindicator3 libayatana-indicator-gtk3 \
-		gnome-system-monitor \
-		gnome-shell-extension-appindicator
+		gnome-system-monitor
 
 .PHONY: install-kepassxc
 install-kepassxc: ## Install Keepassxc from flathub
