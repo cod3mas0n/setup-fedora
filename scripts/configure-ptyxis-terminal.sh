@@ -20,8 +20,8 @@ set -o pipefail               # makes sure a pipeline fails if any command in th
 # Check required commands exist
 command -v gsettings >/dev/null 2>&1 || { echo "gsettings not found. Install gsettings."; exit 1; }
 
-PROFILE_PATH="/"
-PROFILE_ID=$(gsettings get org.gnome.Ptyxis default-profile-uuid)
+PROFILE_ID=$(gsettings get org.gnome.Ptyxis default-profile-uuid | tr -d "'")
+PROFILE_PATH="/org/gnome/Ptyxis/Profiles/${PROFILE_ID}/"
 
 echo "Configuring Ptyxis Terminal profile: $PROFILE_ID"
 echo " Profile path: $PROFILE_PATH"
@@ -51,7 +51,7 @@ gsettings set org.gnome.Ptyxis text-blink-mode 'always'
 gsettings set org.gnome.Ptyxis toast-on-copy-clipboard true
 gsettings set org.gnome.Ptyxis use-system-font "${USE_SYSTEM_FONT}"
 gsettings set org.gnome.Ptyxis visual-bell false
-gsettings set org.gnome.Ptyxis visual-process-leader true
+gsettings set org.gnome.Ptyxis visual-process-leader false
 gsettings set org.gnome.Ptyxis word-char-exceptions '@ms nothing'
 
 # Apply Profile
